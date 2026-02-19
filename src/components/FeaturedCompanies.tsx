@@ -1,13 +1,6 @@
 import { ArrowUpRight, MapPin } from "lucide-react";
-
-const companies = [
-  { name: "BCEL", sector: "Banking & Finance", location: "Vientiane", funding: "$45M", stage: "Established", description: "Banque pour le Commerce Extérieur Lao — leading commercial bank." },
-  { name: "Lao Telecom", sector: "Telecommunications", location: "Vientiane", funding: "$120M", stage: "Established", description: "Major telecom provider with nationwide 4G/5G coverage." },
-  { name: "Kolao Group", sector: "Automotive & Trade", location: "Vientiane", funding: "$80M", stage: "Series D", description: "Largest automotive and trading company in Laos." },
-  { name: "LaoStar", sector: "Fintech", location: "Vientiane", funding: "$3.2M", stage: "Series A", description: "Digital payment and mobile banking solutions for Lao users." },
-  { name: "PharmaLao", sector: "Healthcare", location: "Luang Prabang", funding: "$1.8M", stage: "Seed", description: "Pharmaceutical distribution and healthcare technology." },
-  { name: "GreenMekong", sector: "AgriTech", location: "Savannakhet", funding: "$2.5M", stage: "Series A", description: "Sustainable agriculture technology for smallholder farmers." },
-];
+import { Link } from "react-router-dom";
+import { companies } from "@/data/companies";
 
 const stageBadgeClass = (stage: string) => {
   if (stage === "Established") return "bg-emerald/10 text-emerald";
@@ -33,9 +26,10 @@ const FeaturedCompanies = () => {
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {companies.map((c, i) => (
-            <div
-              key={c.name}
-              className="group cursor-pointer rounded-xl border border-border bg-card p-6 transition-all hover:border-accent/40 hover:shadow-lg hover:shadow-accent/5 animate-fade-in"
+            <Link
+              to={`/company/${c.slug}`}
+              key={c.slug}
+              className="group cursor-pointer rounded-xl border border-border bg-card p-6 transition-all hover:border-accent/40 hover:shadow-lg hover:shadow-accent/5 animate-fade-in block"
               style={{ animationDelay: `${i * 0.08}s` }}
             >
               <div className="mb-4 flex items-start justify-between">
@@ -59,7 +53,7 @@ const FeaturedCompanies = () => {
               <div className="mt-3 border-t border-border pt-3">
                 <span className="rounded-md bg-secondary px-2 py-0.5 text-xs text-muted-foreground">{c.sector}</span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
