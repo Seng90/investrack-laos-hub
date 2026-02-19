@@ -1,0 +1,69 @@
+import { Search, Menu } from "lucide-react";
+import { useState } from "react";
+
+const Navbar = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  return (
+    <nav className="sticky top-0 z-50 border-b border-border bg-card/80 backdrop-blur-lg">
+      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+        <div className="flex items-center gap-2">
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent">
+            <span className="font-display text-lg font-bold text-accent-foreground">L</span>
+          </div>
+          <span className="font-display text-xl font-bold text-foreground">
+            LaoCrunch
+          </span>
+        </div>
+
+        <div className="hidden items-center gap-8 md:flex">
+          <a href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+            Companies
+          </a>
+          <a href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+            Investors
+          </a>
+          <a href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+            Funding
+          </a>
+          <a href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+            News
+          </a>
+        </div>
+
+        <div className="hidden items-center gap-3 md:flex">
+          <button className="flex h-9 items-center gap-2 rounded-lg border border-border bg-card px-3 text-sm text-muted-foreground transition-colors hover:bg-secondary">
+            <Search className="h-4 w-4" />
+            Search...
+          </button>
+          <button className="h-9 rounded-lg bg-accent px-4 text-sm font-medium text-accent-foreground transition-colors hover:opacity-90">
+            Sign Up
+          </button>
+        </div>
+
+        <button
+          className="flex h-9 w-9 items-center justify-center rounded-lg border border-border md:hidden"
+          onClick={() => setMobileOpen(!mobileOpen)}
+        >
+          <Menu className="h-5 w-5" />
+        </button>
+      </div>
+
+      {mobileOpen && (
+        <div className="border-t border-border bg-card px-4 py-4 md:hidden">
+          <div className="flex flex-col gap-3">
+            <a href="#" className="text-sm font-medium text-muted-foreground">Companies</a>
+            <a href="#" className="text-sm font-medium text-muted-foreground">Investors</a>
+            <a href="#" className="text-sm font-medium text-muted-foreground">Funding</a>
+            <a href="#" className="text-sm font-medium text-muted-foreground">News</a>
+            <button className="mt-2 h-9 rounded-lg bg-accent px-4 text-sm font-medium text-accent-foreground">
+              Sign Up
+            </button>
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+};
+
+export default Navbar;
