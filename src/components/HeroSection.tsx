@@ -1,0 +1,53 @@
+import { Search } from "lucide-react";
+import heroImage from "@/assets/hero-laos.jpg";
+
+const HeroSection = () => {
+  return (
+    <section className="relative overflow-hidden">
+      <div className="absolute inset-0">
+        <img src={heroImage} alt="Laos cityscape" className="h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-primary/80" />
+      </div>
+      <div className="relative container mx-auto px-4 py-24 md:py-36">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="mb-4 animate-fade-in text-sm font-medium uppercase tracking-widest text-accent">
+            Discover Lao Businesses
+          </p>
+          <h1 className="mb-6 font-display text-4xl font-bold leading-tight text-primary-foreground md:text-6xl" style={{ animationDelay: "0.1s" }}>
+            The Business Intelligence Platform for{" "}
+            <span className="text-accent">Laos</span>
+          </h1>
+          <p className="mb-10 text-lg text-primary-foreground/70" style={{ animationDelay: "0.2s" }}>
+            Track companies, funding rounds, and investors across Laos. Your gateway to the Lao business ecosystem.
+          </p>
+          <div className="mx-auto flex max-w-xl items-center gap-2 rounded-xl bg-card/10 p-2 backdrop-blur-md">
+            <div className="flex flex-1 items-center gap-3 rounded-lg bg-card px-4 py-3">
+              <Search className="h-5 w-5 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Search companies, investors, industries..."
+                className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none"
+              />
+            </div>
+            <button className="h-12 rounded-lg bg-accent px-6 text-sm font-semibold text-accent-foreground transition-transform hover:scale-[1.02] active:scale-[0.98]">
+              Search
+            </button>
+          </div>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm text-primary-foreground/60">
+            <span>Popular:</span>
+            {["Fintech", "Agriculture", "Tourism", "Energy"].map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full border border-primary-foreground/20 px-3 py-1 transition-colors hover:border-accent hover:text-accent cursor-pointer"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default HeroSection;
