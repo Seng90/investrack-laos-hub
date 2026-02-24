@@ -1,7 +1,21 @@
+import { useState } from "react";
 import { Search } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-laos.jpg";
 
 const HeroSection = () => {
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate(query ? `/search?q=${encodeURIComponent(query)}` : "/search");
+  };
+
+  const handleTagClick = (tag: string) => {
+    navigate(`/search?q=${encodeURIComponent(tag)}`);
+  };
+
   return (
     <section className="relative overflow-hidden">
       <div className="absolute inset-0">
@@ -20,24 +34,27 @@ const HeroSection = () => {
           <p className="mb-10 text-lg text-primary-foreground/70" style={{ animationDelay: "0.2s" }}>
             Track companies, funding rounds, and investors across Laos. Your gateway to the Lao business ecosystem.
           </p>
-          <div className="mx-auto flex max-w-xl items-center gap-2 rounded-xl bg-card/10 p-2 backdrop-blur-md">
+          <form onSubmit={handleSearch} className="mx-auto flex max-w-xl items-center gap-2 rounded-xl bg-card/10 p-2 backdrop-blur-md">
             <div className="flex flex-1 items-center gap-3 rounded-lg bg-card px-4 py-3">
               <Search className="h-5 w-5 text-muted-foreground" />
               <input
                 type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search companies, investors, industries..."
                 className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none"
               />
             </div>
-            <button className="h-12 rounded-lg bg-accent px-6 text-sm font-semibold text-accent-foreground transition-transform hover:scale-[1.02] active:scale-[0.98]">
+            <button type="submit" className="h-12 rounded-lg bg-accent px-6 text-sm font-semibold text-accent-foreground transition-transform hover:scale-[1.02] active:scale-[0.98]">
               Search
             </button>
-          </div>
+          </form>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm text-primary-foreground/60">
             <span>Popular:</span>
             {["Fintech", "Agriculture", "Tourism", "Energy"].map((tag) => (
               <span
                 key={tag}
+                onClick={() => handleTagClick(tag)}
                 className="rounded-full border border-primary-foreground/20 px-3 py-1 transition-colors hover:border-accent hover:text-accent cursor-pointer"
               >
                 {tag}
