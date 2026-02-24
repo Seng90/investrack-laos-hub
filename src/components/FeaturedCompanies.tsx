@@ -19,9 +19,9 @@ const FeaturedCompanies = () => {
               Top Companies in Laos
             </h2>
           </div>
-          <a href="#" className="hidden items-center gap-1 text-sm font-medium text-accent transition-colors hover:underline md:flex">
+          <Link to="/search" className="hidden items-center gap-1 text-sm font-medium text-accent transition-colors hover:underline md:flex">
             View all companies <ArrowUpRight className="h-4 w-4" />
-          </a>
+          </Link>
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
