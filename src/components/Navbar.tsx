@@ -1,5 +1,6 @@
-import { Search, Menu } from "lucide-react";
+import { Search, Menu, Home } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -7,22 +8,25 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 border-b border-border bg-card/80 backdrop-blur-lg">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <div className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent">
             <span className="font-display text-lg font-bold text-accent-foreground">L</span>
           </div>
           <span className="font-display text-xl font-bold text-foreground">
             LaoCrunch
           </span>
-        </div>
+        </Link>
 
         <div className="hidden items-center gap-8 md:flex">
-          <a href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+          <Link to="/" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+            Home
+          </Link>
+          <Link to="/search" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
             Companies
-          </a>
-          <a href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+          </Link>
+          <Link to="/investors" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
             Investors
-          </a>
+          </Link>
           <a href="#" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
             Funding
           </a>
@@ -52,8 +56,9 @@ const Navbar = () => {
       {mobileOpen && (
         <div className="border-t border-border bg-card px-4 py-4 md:hidden">
           <div className="flex flex-col gap-3">
-            <a href="#" className="text-sm font-medium text-muted-foreground">Companies</a>
-            <a href="#" className="text-sm font-medium text-muted-foreground">Investors</a>
+            <Link to="/" className="text-sm font-medium text-muted-foreground">Home</Link>
+            <Link to="/search" className="text-sm font-medium text-muted-foreground">Companies</Link>
+            <Link to="/investors" className="text-sm font-medium text-muted-foreground">Investors</Link>
             <a href="#" className="text-sm font-medium text-muted-foreground">Funding</a>
             <a href="#" className="text-sm font-medium text-muted-foreground">News</a>
             <button className="mt-2 h-9 rounded-lg bg-accent px-4 text-sm font-medium text-accent-foreground">
