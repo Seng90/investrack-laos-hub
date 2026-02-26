@@ -6,9 +6,9 @@ const Footer = () => {
           <div>
             <div className="mb-4 flex items-center gap-2">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent">
-                <span className="font-display text-lg font-bold text-accent-foreground">L</span>
+                <span className="font-display text-lg font-bold text-accent-foreground">I</span>
               </div>
-              <span className="font-display text-xl font-bold">LaoCrunch</span>
+              <span className="font-display text-xl font-bold">InvesTrack</span>
             </div>
             <p className="text-sm text-primary-foreground/60">
               The leading business intelligence platform for the Lao PDR market.
@@ -47,7 +47,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 border-t border-primary-foreground/10 pt-8 text-center text-sm text-primary-foreground/40">
-          © 2026 LaoCrunch. All rights reserved.
+          © 2026 InvesTrack. All rights reserved.
         </div>
       </div>
     </footer>

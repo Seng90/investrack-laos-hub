@@ -1,19 +1,21 @@
-import { Search, Menu, Home } from "lucide-react";
+import { Search, Menu, Moon, Sun } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useTheme } from "@/components/ThemeProvider";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <nav className="sticky top-0 z-50 border-b border-border bg-card/80 backdrop-blur-lg">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link to="/" className="flex items-center gap-2">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent">
-            <span className="font-display text-lg font-bold text-accent-foreground">L</span>
+            <span className="font-display text-lg font-bold text-accent-foreground">I</span>
           </div>
           <span className="font-display text-xl font-bold text-foreground">
-            LaoCrunch
+            InvesTrack
           </span>
         </Link>
 
@@ -36,6 +38,13 @@ const Navbar = () => {
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
+          <button
+            onClick={toggleTheme}
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+            aria-label="Toggle theme"
+          >
+            {theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+          </button>
           <button className="flex h-9 items-center gap-2 rounded-lg border border-border bg-card px-3 text-sm text-muted-foreground transition-colors hover:bg-secondary">
             <Search className="h-4 w-4" />
             Search...
@@ -45,12 +54,21 @@ const Navbar = () => {
           </button>
         </div>
 
-        <button
-          className="flex h-9 w-9 items-center justify-center rounded-lg border border-border md:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          <Menu className="h-5 w-5" />
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <button
+            onClick={toggleTheme}
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground"
+            aria-label="Toggle theme"
+          >
+            {theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+          </button>
+          <button
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border"
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+        </div>
       </div>
 
       {mobileOpen && (
