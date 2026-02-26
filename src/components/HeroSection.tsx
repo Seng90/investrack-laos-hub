@@ -28,7 +28,7 @@ const HeroSection = () => {
             Discover Lao Businesses
           </p>
           <h1 className="mb-6 font-display text-4xl font-bold leading-tight text-primary-foreground md:text-6xl" style={{ animationDelay: "0.1s" }}>
-            The Business Intelligence Platform for{" "}
+            The Investment Tracking Platform for{" "}
             <span className="text-accent">Laos</span>
           </h1>
           <p className="mb-10 text-lg text-primary-foreground/70" style={{ animationDelay: "0.2s" }}>
