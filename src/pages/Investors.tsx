@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Building2, MapPin, Briefcase, ExternalLink, Home } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import PageTransition from "@/components/PageTransition";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { investors } from "@/data/investors";
@@ -14,6 +15,7 @@ const typeBadgeClass = (type: string) => {
 
 const Investors = () => {
   return (
+    <PageTransition>
     <div className="min-h-screen bg-background">
       <Navbar />
 
@@ -74,6 +76,7 @@ const Investors = () => {
 
       <Footer />
     </div>
+    </PageTransition>
   );
 };
 

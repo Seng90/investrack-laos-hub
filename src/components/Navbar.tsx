@@ -49,9 +49,12 @@ const Navbar = () => {
             <Search className="h-4 w-4" />
             Search...
           </button>
-          <button className="h-9 rounded-lg bg-accent px-4 text-sm font-medium text-accent-foreground transition-colors hover:opacity-90">
+          <Link to="/sign-in" className="h-9 rounded-lg border border-border px-4 text-sm font-medium text-foreground transition-colors hover:bg-secondary inline-flex items-center">
+            Sign In
+          </Link>
+          <Link to="/sign-up" className="h-9 rounded-lg bg-accent px-4 text-sm font-medium text-accent-foreground transition-colors hover:opacity-90 inline-flex items-center">
             Sign Up
-          </button>
+          </Link>
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
@@ -79,9 +82,10 @@ const Navbar = () => {
             <Link to="/investors" className="text-sm font-medium text-muted-foreground">Investors</Link>
             <a href="#" className="text-sm font-medium text-muted-foreground">Funding</a>
             <a href="#" className="text-sm font-medium text-muted-foreground">News</a>
-            <button className="mt-2 h-9 rounded-lg bg-accent px-4 text-sm font-medium text-accent-foreground">
+            <Link to="/sign-in" className="text-sm font-medium text-muted-foreground">Sign In</Link>
+            <Link to="/sign-up" className="mt-2 h-9 rounded-lg bg-accent px-4 text-sm font-medium text-accent-foreground inline-flex items-center justify-center">
               Sign Up
-            </button>
+            </Link>
           </div>
         </div>
       )}
