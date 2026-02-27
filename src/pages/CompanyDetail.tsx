@@ -3,6 +3,7 @@ import { ArrowLeft, Globe, MapPin, Users, Calendar, ExternalLink, Home, Trending
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PageTransition from "@/components/PageTransition";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -49,6 +50,7 @@ const CompanyDetail = () => {
 
   if (!company) {
     return (
+      <PageTransition>
       <div className="min-h-screen bg-background">
         <Navbar />
         <div className="container mx-auto flex flex-col items-center justify-center px-4 py-32 text-center">
@@ -59,10 +61,12 @@ const CompanyDetail = () => {
           </Link>
         </div>
       </div>
+      </PageTransition>
     );
   }
 
   return (
+    <PageTransition>
     <div className="min-h-screen bg-background">
       <Navbar />
 
@@ -271,6 +275,7 @@ const CompanyDetail = () => {
 
       <Footer />
     </div>
+    </PageTransition>
   );
 };
 

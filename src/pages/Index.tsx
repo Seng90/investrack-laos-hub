@@ -6,19 +6,22 @@ import IndustryCategories from "@/components/IndustryCategories";
 import RecentFunding from "@/components/RecentFunding";
 import FundingNews from "@/components/FundingNews";
 import Footer from "@/components/Footer";
+import PageTransition from "@/components/PageTransition";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
-      <HeroSection />
-      <StatsBar />
-      <FeaturedCompanies />
-      <IndustryCategories />
-      <RecentFunding />
-      <FundingNews />
-      <Footer />
-    </div>
+    <PageTransition>
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <HeroSection />
+        <StatsBar />
+        <FeaturedCompanies />
+        <IndustryCategories />
+        <RecentFunding />
+        <FundingNews />
+        <Footer />
+      </div>
+    </PageTransition>
   );
 };
 

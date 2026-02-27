@@ -3,6 +3,7 @@ import { useSearchParams, Link } from "react-router-dom";
 import { Search, MapPin, SlidersHorizontal, X } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PageTransition from "@/components/PageTransition";
 import { companies } from "@/data/companies";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -208,8 +209,8 @@ const SearchResults = () => {
   );
 
   return (
+    <PageTransition>
     <div className="min-h-screen bg-background">
-      <Navbar />
 
       {/* Search header */}
       <div className="border-b border-border bg-card">
@@ -350,6 +351,7 @@ const SearchResults = () => {
 
       <Footer />
     </div>
+    </PageTransition>
   );
 };
 
