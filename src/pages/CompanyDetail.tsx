@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Globe, MapPin, Users, Calendar, ExternalLink, Home, TrendingUp } from "lucide-react";
+import { ArrowLeft, Globe, MapPin, Users, Calendar, ExternalLink, TrendingUp } from "lucide-react";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -73,14 +74,10 @@ const CompanyDetail = () => {
       {/* Header */}
       <header className="border-b border-border bg-card">
         <div className="container mx-auto px-4 py-8">
-          <div className="mb-6 flex items-center gap-4">
-            <Link to="/" className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground">
-              <Home className="h-4 w-4" /> Home
-            </Link>
-            <Link to="/search" className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
-              <ArrowLeft className="h-4 w-4" /> Back to search
-            </Link>
-          </div>
+          <Breadcrumbs items={[
+            { label: "Search", href: "/search" },
+            { label: company.name },
+          ]} />
 
           <div className="mt-4 flex flex-col gap-6 sm:flex-row sm:items-start">
             <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-primary font-display text-3xl font-bold text-primary-foreground">
