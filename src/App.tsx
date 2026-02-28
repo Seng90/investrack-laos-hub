@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Index from "./pages/Index";
+import Companies from "./pages/Companies";
 import CompanyDetail from "./pages/CompanyDetail";
 import SearchResults from "./pages/SearchResults";
 import Investors from "./pages/Investors";
@@ -21,6 +22,7 @@ const AnimatedRoutes = () => {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Index />} />
+        <Route path="/companies" element={<Companies />} />
         <Route path="/company/:slug" element={<CompanyDetail />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/investors" element={<Investors />} />

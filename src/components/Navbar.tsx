@@ -23,7 +23,7 @@ const Navbar = () => {
           <Link to="/" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
             Home
           </Link>
-          <Link to="/search" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+          <Link to="/companies" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
             Companies
           </Link>
           <Link to="/investors" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
@@ -78,7 +78,7 @@ const Navbar = () => {
         <div className="border-t border-border bg-card px-4 py-4 md:hidden">
           <div className="flex flex-col gap-3">
             <Link to="/" className="text-sm font-medium text-muted-foreground">Home</Link>
-            <Link to="/search" className="text-sm font-medium text-muted-foreground">Companies</Link>
+            <Link to="/companies" className="text-sm font-medium text-muted-foreground">Companies</Link>
             <Link to="/investors" className="text-sm font-medium text-muted-foreground">Investors</Link>
             <a href="#" className="text-sm font-medium text-muted-foreground">Funding</a>
             <a href="#" className="text-sm font-medium text-muted-foreground">News</a>
