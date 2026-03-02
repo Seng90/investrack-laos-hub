@@ -1,3 +1,10 @@
+import bcelLogo from "@/assets/logos/bcel.png";
+import laoTelecomLogo from "@/assets/logos/lao-telecom.png";
+import kolaoGroupLogo from "@/assets/logos/kolao-group.png";
+import laostarLogo from "@/assets/logos/laostar.png";
+import pharmalaoLogo from "@/assets/logos/pharmalao.png";
+import greenmekongLogo from "@/assets/logos/greenmekong.png";
+
 export interface TeamMember {
   name: string;
   role: string;
@@ -40,7 +47,7 @@ export const companies: Company[] = [
   {
     slug: "bcel",
     name: "BCEL",
-    logo: "https://ui-avatars.com/api/?name=BCEL&background=1a365d&color=fff&size=128&bold=true&format=png",
+    logo: bcelLogo,
     sector: "Banking & Finance",
     location: "Vientiane",
     funding: "$45M",
@@ -70,7 +77,7 @@ export const companies: Company[] = [
   {
     slug: "lao-telecom",
     name: "Lao Telecom",
-    logo: "https://ui-avatars.com/api/?name=LT&background=0d9488&color=fff&size=128&bold=true&format=png",
+    logo: laoTelecomLogo,
     sector: "Telecommunications",
     location: "Vientiane",
     funding: "$120M",
@@ -98,7 +105,7 @@ export const companies: Company[] = [
   {
     slug: "kolao-group",
     name: "Kolao Group",
-    logo: "https://ui-avatars.com/api/?name=KG&background=b45309&color=fff&size=128&bold=true&format=png",
+    logo: kolaoGroupLogo,
     sector: "Automotive & Trade",
     location: "Vientiane",
     funding: "$80M",
@@ -126,7 +133,7 @@ export const companies: Company[] = [
   {
     slug: "laostar",
     name: "LaoStar",
-    logo: "https://ui-avatars.com/api/?name=LS&background=7c3aed&color=fff&size=128&bold=true&format=png",
+    logo: laostarLogo,
     sector: "Fintech",
     location: "Vientiane",
     funding: "$3.2M",
@@ -153,7 +160,7 @@ export const companies: Company[] = [
   {
     slug: "pharmalao",
     name: "PharmaLao",
-    logo: "https://ui-avatars.com/api/?name=PL&background=dc2626&color=fff&size=128&bold=true&format=png",
+    logo: pharmalaoLogo,
     sector: "Healthcare",
     location: "Luang Prabang",
     funding: "$1.8M",
@@ -177,7 +184,7 @@ export const companies: Company[] = [
   {
     slug: "greenmekong",
     name: "GreenMekong",
-    logo: "https://ui-avatars.com/api/?name=GM&background=16a34a&color=fff&size=128&bold=true&format=png",
+    logo: greenmekongLogo,
     sector: "AgriTech",
     location: "Savannakhet",
     funding: "$2.5M",
