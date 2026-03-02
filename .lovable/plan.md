@@ -1,41 +1,44 @@
 
+## Plan: Featured Companies Section + Company Logo Images
 
-## Plan: Page Transitions with Framer Motion + Sign Up / Sign In Pages
+### 1. Add logo field to company data
+Update `src/data/companies.ts`:
+- Add a `logo` field to the `Company` interface (string URL)
+- Populate each company with a professional placeholder logo using `https://ui-avatars.com/api/` (generates letter-based avatars with custom colors and rounded shapes) or `https://logo.clearbit.com/` style URLs
+- This gives each company a unique, professional-looking circular logo image
 
-### 1. Install framer-motion
-Add `framer-motion` as a dependency.
+### 2. Create Featured Companies section on Companies page
+Add a new "Featured Companies" highlight section between the hero header and the search/filter bar in `src/pages/Companies.tsx`:
+- Select the top 3 companies (BCEL, Lao Telecom, Kolao Group -- highest funding) as "featured"
+- Display them in larger, more prominent showcase cards in a horizontal row
+- Each featured card includes:
+  - Company logo image (round, larger size ~16x16)
+  - Company name, sector badge, and stage tag
+  - Full description (not truncated)
+  - Key metrics: Funding, Employees, Founded, Location
+  - Latest news headline
+  - Prominent "View Profile" CTA button
+- Cards use a gradient background, subtle border glow, and framer-motion stagger animations
+- Section header: "Featured Companies" with a star/trophy icon
 
-### 2. Create animated page wrapper
-Create `src/components/PageTransition.tsx` -- a wrapper component using framer-motion's `motion.div` with fade + slight slide-up animation. Each page will be wrapped with this component.
+### 3. Replace letter avatars with logo images everywhere
+Update both the `CompanyCard` component and the `FeaturedCompanies.tsx` homepage component:
+- Replace the `div` showing `company.name.charAt(0)` with an `<img>` tag using the new `logo` field
+- Add an `onError` fallback that shows the letter initial if the image fails to load
+- Style logos with rounded corners and a subtle shadow
 
-### 3. Add AnimatePresence to routing
-Update `src/App.tsx` to wrap `<Routes>` with framer-motion's `<AnimatePresence mode="wait">` and use `useLocation` to key route transitions. This requires moving `<Routes>` into a child component inside `<BrowserRouter>` so `useLocation` is available.
-
-### 4. Wrap all pages with PageTransition
-Update each page (`Index`, `CompanyDetail`, `SearchResults`, `Investors`, `NotFound`) to wrap their content with the `PageTransition` component.
-
-### 5. Create Sign Up page
-Create `src/pages/SignUp.tsx` with a polished registration form:
-- Fields: Full Name, Email, Password, Confirm Password
-- "Sign up with Google" social button placeholder
-- Link to Sign In page
-- Consistent InvesTrack branding and theme support
-
-### 6. Create Sign In page
-Create `src/pages/SignIn.tsx` with a login form:
-- Fields: Email, Password
-- "Remember me" checkbox, "Forgot password" link
-- "Sign in with Google" social button placeholder
-- Link to Sign Up page
-
-### 7. Add routes and navigation links
-- Add `/sign-up` and `/sign-in` routes in `App.tsx`
-- Update Navbar's "Sign Up" button to link to `/sign-up`
-- Add a "Sign In" link/button next to it in the Navbar (both desktop and mobile)
+### 4. Update FeaturedCompanies homepage component
+Update `src/components/FeaturedCompanies.tsx` to also use logo images instead of letter avatars, keeping consistency across the site.
 
 ### Technical Details
-- Page transition animation: `opacity 0 -> 1`, `translateY(20px) -> 0`, duration ~0.3s with ease-out
-- Exit animation: `opacity 1 -> 0`, `translateY(-10px)`, duration ~0.2s
-- Auth pages are UI-only (no backend) -- forms show toast on submit as placeholder
-- Both auth pages will include the Navbar and Footer for consistency
 
+**Company logos**: Will use `https://ui-avatars.com/api/?name=BCEL&background=1a365d&color=fff&size=128&bold=true&format=png` style URLs per company -- these generate real images dynamically based on company name with custom brand colors. This avoids needing to upload actual logo files while still looking professional.
+
+**Featured card layout**: Uses a 3-column grid (`lg:grid-cols-3`) with cards that are taller and more detailed than the regular directory cards. On mobile, they stack vertically.
+
+**Files to modify**:
+- `src/data/companies.ts` -- add `logo` field to interface and data
+- `src/pages/Companies.tsx` -- add Featured section, update CompanyCard to use logos
+- `src/components/FeaturedCompanies.tsx` -- update to use logo images
+
+**No new dependencies needed** -- uses existing framer-motion, lucide-react, and standard img tags.
