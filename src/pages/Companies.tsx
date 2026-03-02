@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Search, MapPin, Users, Calendar, ArrowRight, Building2, TrendingUp, Globe, Sparkles } from "lucide-react";
+import { Search, MapPin, Users, Calendar, ArrowRight, Building2, TrendingUp, Globe, Sparkles, Trophy, Newspaper } from "lucide-react";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -11,6 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 
 const ALL_SECTORS = [...new Set(companies.map((c) => c.sector))];
+const FEATURED_SLUGS = ["bcel", "lao-telecom", "kolao-group"];
+const featuredCompanies = companies.filter((c) => FEATURED_SLUGS.includes(c.slug));
 
 const stageBadgeClass = (stage: string) => {
   if (stage === "Established") return "bg-emerald/10 text-emerald border-emerald/30";
@@ -30,6 +32,145 @@ const sectorIcon = (sector: string) => {
   }
 };
 
+const CompanyLogo = ({ company, size = "md" }: { company: Company; size?: "sm" | "md" | "lg" }) => {
+  const sizeClasses = {
+    sm: "h-12 w-12 text-lg",
+    md: "h-14 w-14 text-xl",
+    lg: "h-16 w-16 text-2xl",
+  };
+
+  return (
+    <img
+      src={company.logo}
+      alt={`${company.name} logo`}
+      className={`${sizeClasses[size]} rounded-2xl shadow-lg object-cover`}
+      onError={(e) => {
+        const target = e.currentTarget;
+        target.style.display = "none";
+        const fallback = target.nextElementSibling as HTMLElement;
+        if (fallback) fallback.style.display = "flex";
+      }}
+    />
+  );
+};
+
+const CompanyLogoWithFallback = ({ company, size = "md", className = "" }: { company: Company; size?: "sm" | "md" | "lg"; className?: string }) => {
+  const sizeClasses = {
+    sm: "h-12 w-12 text-lg",
+    md: "h-14 w-14 text-xl",
+    lg: "h-16 w-16 text-2xl",
+  };
+
+  return (
+    <div className={`relative ${className}`}>
+      <img
+        src={company.logo}
+        alt={`${company.name} logo`}
+        className={`${sizeClasses[size]} rounded-2xl shadow-lg object-cover`}
+        onError={(e) => {
+          const target = e.currentTarget;
+          target.style.display = "none";
+          const fallback = target.nextElementSibling as HTMLElement;
+          if (fallback) fallback.style.display = "flex";
+        }}
+      />
+      <div
+        className={`${sizeClasses[size]} items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-navy-light font-display font-bold text-primary-foreground shadow-lg hidden`}
+      >
+        {company.name.charAt(0)}
+      </div>
+    </div>
+  );
+};
+
+const FeaturedCard = ({ company, index }: { company: Company; index: number }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, delay: index * 0.15, ease: "easeOut" }}
+  >
+    <Link
+      to={`/company/${company.slug}`}
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-accent/20 bg-gradient-to-br from-card via-card to-accent/5 transition-all duration-300 hover:border-accent/50 hover:shadow-2xl hover:shadow-accent/15 hover:-translate-y-2"
+    >
+      {/* Gradient top bar */}
+      <div className="h-2 w-full bg-gradient-to-r from-accent via-emerald/60 to-accent/40" />
+
+      <div className="flex flex-1 flex-col p-7">
+        {/* Header */}
+        <div className="mb-5 flex items-start justify-between">
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <CompanyLogoWithFallback company={company} size="lg" />
+              <span className="absolute -bottom-1 -right-1 text-lg">{sectorIcon(company.sector)}</span>
+            </div>
+            <div>
+              <h3 className="font-display text-xl font-bold text-foreground transition-colors group-hover:text-accent">
+                {company.name}
+              </h3>
+              <p className="flex items-center gap-1 text-xs text-muted-foreground">
+                <MapPin className="h-3 w-3" /> {company.location}
+              </p>
+            </div>
+          </div>
+          <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${stageBadgeClass(company.stage)}`}>
+            {company.stage}
+          </span>
+        </div>
+
+        {/* Full description */}
+        <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
+          {company.description}
+        </p>
+
+        {/* Stats grid */}
+        <div className="mb-5 grid grid-cols-2 gap-3">
+          <div className="rounded-xl bg-secondary/60 px-3 py-2.5 text-center">
+            <p className="font-display text-base font-bold text-foreground">{company.funding}</p>
+            <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Funding</p>
+          </div>
+          <div className="rounded-xl bg-secondary/60 px-3 py-2.5 text-center">
+            <p className="font-display text-base font-bold text-foreground">{company.employees}</p>
+            <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Employees</p>
+          </div>
+          <div className="rounded-xl bg-secondary/60 px-3 py-2.5 text-center">
+            <p className="font-display text-base font-bold text-foreground">{company.founded}</p>
+            <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Founded</p>
+          </div>
+          <div className="rounded-xl bg-secondary/60 px-3 py-2.5 text-center">
+            <p className="font-display text-base font-bold text-foreground">{company.location}</p>
+            <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Location</p>
+          </div>
+        </div>
+
+        {/* Latest news */}
+        {company.news[0] && (
+          <div className="mb-5 flex items-start gap-2 rounded-xl bg-accent/5 border border-accent/10 px-4 py-3">
+            <Newspaper className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+            <div>
+              <p className="text-xs font-medium text-foreground line-clamp-1">{company.news[0].title}</p>
+              <p className="text-[10px] text-muted-foreground">{company.news[0].source} · {company.news[0].date}</p>
+            </div>
+          </div>
+        )}
+
+        {/* Footer */}
+        <div className="mt-auto flex items-center justify-between border-t border-border pt-4">
+          <Badge variant="secondary" className="rounded-lg text-xs">
+            {company.sector}
+          </Badge>
+          <span className="inline-flex items-center gap-1.5 rounded-lg bg-accent/10 px-3 py-1.5 text-xs font-semibold text-accent transition-all group-hover:bg-accent group-hover:text-accent-foreground">
+            View Profile <ArrowRight className="h-3 w-3" />
+          </span>
+        </div>
+      </div>
+
+      {/* Hover glow */}
+      <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-t from-accent/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+    </Link>
+  </motion.div>
+);
+
 const CompanyCard = ({ company, index }: { company: Company; index: number }) => (
   <motion.div
     initial={{ opacity: 0, y: 24 }}
@@ -48,9 +189,7 @@ const CompanyCard = ({ company, index }: { company: Company; index: number }) =>
         <div className="mb-5 flex items-start justify-between">
           <div className="flex items-center gap-4">
             <div className="relative">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-navy-light font-display text-xl font-bold text-primary-foreground shadow-lg transition-transform duration-300 group-hover:scale-110">
-                {company.name.charAt(0)}
-              </div>
+              <CompanyLogoWithFallback company={company} size="md" />
               <span className="absolute -bottom-1 -right-1 text-lg">{sectorIcon(company.sector)}</span>
             </div>
             <div>
@@ -183,6 +322,32 @@ const Companies = () => {
             </motion.div>
           </div>
         </header>
+
+        {/* Featured Companies Section */}
+        <section className="border-b border-border bg-gradient-to-b from-background to-card">
+          <div className="container mx-auto px-4 py-12">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+              className="mb-8 flex items-center gap-3"
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent/10">
+                <Trophy className="h-5 w-5 text-accent" />
+              </div>
+              <div>
+                <h2 className="font-display text-2xl font-bold text-foreground">Featured Companies</h2>
+                <p className="text-sm text-muted-foreground">Top funded companies leading the Lao ecosystem</p>
+              </div>
+            </motion.div>
+
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {featuredCompanies.map((c, i) => (
+                <FeaturedCard key={c.slug} company={c} index={i} />
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* Search & Filters */}
         <section className="border-b border-border bg-card">

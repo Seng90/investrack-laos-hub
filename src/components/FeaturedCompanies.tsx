@@ -45,8 +45,21 @@ const FeaturedCompanies = () => {
 
               <div className="p-6">
                 <div className="mb-4 flex items-start justify-between">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-navy-light font-display text-lg font-bold text-primary-foreground shadow-md">
-                    {c.name.charAt(0)}
+                  <div className="relative">
+                    <img
+                      src={c.logo}
+                      alt={`${c.name} logo`}
+                      className="h-12 w-12 rounded-xl shadow-md object-cover"
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        target.style.display = "none";
+                        const fallback = target.nextElementSibling as HTMLElement;
+                        if (fallback) fallback.style.display = "flex";
+                      }}
+                    />
+                    <div className="hidden h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-navy-light font-display text-lg font-bold text-primary-foreground shadow-md">
+                      {c.name.charAt(0)}
+                    </div>
                   </div>
                   <span className={`rounded-full border px-3 py-1 text-xs font-medium ${stageBadgeClass(c.stage)}`}>
                     {c.stage}
