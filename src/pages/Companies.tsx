@@ -270,7 +270,7 @@ const Companies = () => {
         <Navbar />
 
         {/* Hero header */}
-        <header className="relative overflow-hidden border-b border-border bg-gradient-to-br from-primary via-primary to-navy-light">
+        <header className="relative overflow-hidden border-b border-border bg-gradient-to-br from-navy via-navy to-navy-light">
           {/* Abstract decorative shapes */}
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-accent/10 blur-3xl" />
