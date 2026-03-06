@@ -31,7 +31,7 @@ const Investors = () => {
       <main className="container mx-auto px-4 py-10">
         <div className="grid gap-6 md:grid-cols-2">
           {investors.map((inv) => (
-            <div key={inv.slug} className="group rounded-xl border border-border bg-card p-6 transition-all hover:border-accent/40 hover:shadow-lg">
+            <Link key={inv.slug} to={`/investor/${inv.slug}`} className="group rounded-xl border border-border bg-card p-6 transition-all hover:border-accent/40 hover:shadow-lg block">
               <div className="flex items-start gap-4">
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary font-display text-xl font-bold text-primary-foreground">
                   {inv.name.charAt(0)}
@@ -68,7 +68,7 @@ const Investors = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </main>

@@ -11,6 +11,7 @@ import CompanyDetail from "./pages/CompanyDetail";
 import SearchResults from "./pages/SearchResults";
 import Investors from "./pages/Investors";
 import SignUp from "./pages/SignUp";
+import InvestorDetail from "./pages/InvestorDetail";
 import SignIn from "./pages/SignIn";
 import NotFound from "./pages/NotFound";
 
@@ -26,6 +27,7 @@ const AnimatedRoutes = () => {
         <Route path="/company/:slug" element={<CompanyDetail />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/investors" element={<Investors />} />
+        <Route path="/investor/:slug" element={<InvestorDetail />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="*" element={<NotFound />} />
