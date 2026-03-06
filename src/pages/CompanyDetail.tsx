@@ -80,8 +80,8 @@ const CompanyDetail = () => {
           ]} />
 
           <div className="mt-4 flex flex-col gap-6 sm:flex-row sm:items-start">
-            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-primary font-display text-3xl font-bold text-primary-foreground">
-              {company.name.charAt(0)}
+            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-card border border-border overflow-hidden">
+              <img src={company.logo} alt={`${company.name} logo`} className="h-full w-full object-contain p-2" />
             </div>
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-3">
