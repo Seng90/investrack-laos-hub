@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-laos.jpg";
+import heroImageLight from "@/assets/hero-laos-light.jpg";
 
 const HeroSection = () => {
   const [query, setQuery] = useState("");
