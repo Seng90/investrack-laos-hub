@@ -35,6 +35,9 @@ const Navbar = () => {
           <Link to="/compare" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
             Compare
           </Link>
+          <Link to="/dashboard" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+            Dashboard
+          </Link>
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
@@ -82,6 +85,7 @@ const Navbar = () => {
             <Link to="/investors" className="text-sm font-medium text-muted-foreground">Investors</Link>
             <Link to="/news-funding" className="text-sm font-medium text-muted-foreground">News & Funding</Link>
             <Link to="/compare" className="text-sm font-medium text-muted-foreground">Compare</Link>
+            <Link to="/dashboard" className="text-sm font-medium text-muted-foreground">Dashboard</Link>
             <Link to="/sign-in" className="text-sm font-medium text-muted-foreground">Sign In</Link>
             <Link to="/sign-up" className="mt-2 h-9 rounded-lg bg-accent px-4 text-sm font-medium text-accent-foreground inline-flex items-center justify-center">
               Sign Up
