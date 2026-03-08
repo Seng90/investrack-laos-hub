@@ -27,11 +27,11 @@ const HeroSection = () => {
           <p className="mb-4 animate-fade-in text-sm font-medium uppercase tracking-widest text-accent">
             Discover Lao Businesses
           </p>
-          <h1 className="mb-6 font-display text-4xl font-bold leading-tight text-accent md:text-6xl" style={{ animationDelay: "0.1s" }}>
+          <h1 className="mb-6 font-display text-4xl font-bold leading-tight text-white dark:text-accent md:text-6xl" style={{ animationDelay: "0.1s" }}>
             The Investment Tracking Platform for{" "}
             <span className="text-accent">Laos</span>
           </h1>
-          <p className="mb-10 text-lg text-accent" style={{ animationDelay: "0.2s" }}>
+          <p className="mb-10 text-lg text-white dark:text-accent" style={{ animationDelay: "0.2s" }}>
             Track companies, funding rounds, and investors across Laos. Your gateway to the Lao business ecosystem.
           </p>
           <form onSubmit={handleSearch} className="mx-auto flex max-w-xl items-center gap-2 rounded-xl bg-card/10 p-2 backdrop-blur-md">
@@ -49,13 +49,13 @@ const HeroSection = () => {
               Search
             </button>
           </form>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm text-accent">
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm text-white dark:text-accent">
             <span>Popular:</span>
             {["Fintech", "Agriculture", "Tourism", "Energy"].map((tag) => (
               <span
                 key={tag}
                 onClick={() => handleTagClick(tag)}
-                className="rounded-full border border-accent/40 px-3 py-1 text-accent transition-colors hover:border-accent hover:bg-accent/10 cursor-pointer"
+                className="rounded-full border border-white/40 dark:border-accent/40 px-3 py-1 text-white dark:text-accent transition-colors hover:border-white dark:hover:border-accent hover:bg-white/10 dark:hover:bg-accent/10 cursor-pointer"
               >
                 {tag}
               </span>
