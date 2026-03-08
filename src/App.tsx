@@ -13,6 +13,8 @@ import Investors from "./pages/Investors";
 import SignUp from "./pages/SignUp";
 import InvestorDetail from "./pages/InvestorDetail";
 import SignIn from "./pages/SignIn";
+import Compare from "./pages/Compare";
+import NewsFunding from "./pages/NewsFunding";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +30,8 @@ const AnimatedRoutes = () => {
         <Route path="/search" element={<SearchResults />} />
         <Route path="/investors" element={<Investors />} />
         <Route path="/investor/:slug" element={<InvestorDetail />} />
+        <Route path="/compare" element={<Compare />} />
+        <Route path="/news-funding" element={<NewsFunding />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="*" element={<NotFound />} />
