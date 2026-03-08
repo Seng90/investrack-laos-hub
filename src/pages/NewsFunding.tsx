@@ -84,7 +84,7 @@ const NewsFunding = () => {
               Track the latest funding rounds and market news across the Lao startup ecosystem.
             </p>
 
-            <div className="mt-6 grid grid-cols-3 gap-4 max-w-lg">
+            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3 max-w-lg">
               <div className="rounded-xl border border-primary-foreground/10 bg-primary-foreground/5 px-4 py-3 backdrop-blur-sm">
                 <p className="font-display text-xl font-bold text-primary-foreground">{allFundingRounds.length}</p>
                 <p className="text-xs text-primary-foreground/50">Rounds</p>
