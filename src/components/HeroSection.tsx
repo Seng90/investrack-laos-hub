@@ -20,8 +20,7 @@ const HeroSection = () => {
   return (
     <section className="relative overflow-hidden">
       <div className="absolute inset-0">
-        <img src={heroImageLight} alt="Laos cityscape" className="h-full w-full object-cover dark:hidden" />
-        <img src={heroImage} alt="Laos cityscape" className="h-full w-full object-cover hidden dark:block" />
+        <img src={heroImageLight} alt="Laos cityscape" className="h-full w-full object-cover" />
         <div className="absolute inset-0 bg-[hsl(220,50%,10%)]/30 dark:bg-[hsl(220,50%,10%)]/75" />
       </div>
       <div className="relative container mx-auto px-4 py-24 md:py-36">
