@@ -1,11 +1,32 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { TrendingUp, Building2, Users, DollarSign, ArrowUpRight } from "lucide-react";
-import { AreaChart, Area, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import {
+  TrendingUp,
+  Building2,
+  Users,
+  DollarSign,
+  ArrowUpRight,
+} from "lucide-react";
+import {
+  AreaChart,
+  Area,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+} from "recharts";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import PageTransition from "@/components/PageTransition";
+import MonthlyFundingChart from "@/components/dashboard/MonthlyFundingChart";
+import YoYGrowth from "@/components/dashboard/YoYGrowth";
+import RecentActivityFeed from "@/components/dashboard/RecentActivityFeed";
 import { companies } from "@/data/companies";
 import { investors } from "@/data/investors";
 
@@ -13,7 +34,7 @@ const parseFunding = (str: string): number => {
   const num = parseFloat(str.replace(/[^0-9.]/g, ""));
   if (str.includes("B")) return num * 1000;
   if (str.includes("K")) return num / 1000;
-  return num; // already in M
+  return num;
 };
 
 const COLORS = [
@@ -73,7 +94,10 @@ const Dashboard = () => {
         .map((inv) => ({
           ...inv,
           laoDeals: inv.portfolio.length,
-          laoFunded: inv.portfolio.reduce((s, p) => s + parseFunding(p.amount), 0),
+          laoFunded: inv.portfolio.reduce(
+            (s, p) => s + parseFunding(p.amount),
+            0
+          ),
         }))
         .sort((a, b) => b.laoFunded - a.laoFunded)
         .slice(0, 6),
@@ -104,7 +128,7 @@ const Dashboard = () => {
           </div>
 
           {/* Stats */}
-          <div className="mb-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+          <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
             {stats.map((s) => (
               <div
                 key={s.label}
@@ -113,15 +137,16 @@ const Dashboard = () => {
                 <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-accent/10">
                   <s.icon className="h-5 w-5 text-accent" />
                 </div>
-                <p className="font-display text-2xl font-bold text-foreground">{s.value}</p>
+                <p className="font-display text-2xl font-bold text-foreground">
+                  {s.value}
+                </p>
                 <p className="text-sm text-muted-foreground">{s.label}</p>
               </div>
             ))}
           </div>
 
-          {/* Charts row */}
-          <div className="mb-10 grid gap-6 lg:grid-cols-2">
-            {/* Funding Over Time */}
+          {/* Charts: Cumulative + Sector */}
+          <div className="mb-8 grid gap-6 lg:grid-cols-2">
             <div className="rounded-xl border border-border bg-card p-6">
               <h2 className="mb-4 font-display text-lg font-semibold text-foreground">
                 Cumulative Funding Over Time
@@ -136,11 +161,7 @@ const Dashboard = () => {
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                   <XAxis dataKey="year" stroke="hsl(var(--muted-foreground))" fontSize={12} />
-                  <YAxis
-                    stroke="hsl(var(--muted-foreground))"
-                    fontSize={12}
-                    tickFormatter={(v) => `$${v}M`}
-                  />
+                  <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} tickFormatter={(v) => `$${v}M`} />
                   <Tooltip
                     contentStyle={{
                       backgroundColor: "hsl(var(--card))",
@@ -150,18 +171,11 @@ const Dashboard = () => {
                     }}
                     formatter={(value: number) => [`$${value.toFixed(1)}M`, "Total Funding"]}
                   />
-                  <Area
-                    type="monotone"
-                    dataKey="total"
-                    stroke="hsl(var(--accent))"
-                    strokeWidth={2}
-                    fill="url(#gradFunding)"
-                  />
+                  <Area type="monotone" dataKey="total" stroke="hsl(var(--accent))" strokeWidth={2} fill="url(#gradFunding)" />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
 
-            {/* Sector Distribution */}
             <div className="rounded-xl border border-border bg-card p-6">
               <h2 className="mb-4 font-display text-lg font-semibold text-foreground">
                 Funding by Sector
@@ -194,69 +208,87 @@ const Dashboard = () => {
                     }}
                     formatter={(value: number) => [`$${value}M`, "Funding"]}
                   />
-                  <Legend
-                    wrapperStyle={{ fontSize: "12px", color: "hsl(var(--muted-foreground))" }}
-                  />
+                  <Legend wrapperStyle={{ fontSize: "12px", color: "hsl(var(--muted-foreground))" }} />
                 </PieChart>
               </ResponsiveContainer>
             </div>
           </div>
 
-          {/* Top Investors Leaderboard */}
-          <div className="rounded-xl border border-border bg-card p-6">
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="font-display text-lg font-semibold text-foreground">
-                Top Investors in Laos
-              </h2>
-              <Link
-                to="/investors"
-                className="flex items-center gap-1 text-sm font-medium text-accent hover:underline"
-              >
-                View All <ArrowUpRight className="h-4 w-4" />
-              </Link>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                <thead>
-                  <tr className="border-b border-border text-muted-foreground">
-                    <th className="pb-3 pr-4 font-medium">#</th>
-                    <th className="pb-3 pr-4 font-medium">Investor</th>
-                    <th className="pb-3 pr-4 font-medium">Type</th>
-                    <th className="pb-3 pr-4 font-medium text-right">Lao Deals</th>
-                    <th className="pb-3 font-medium text-right">Lao Funding</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {topInvestors.map((inv, i) => (
-                    <tr
-                      key={inv.slug}
-                      className="border-b border-border/50 transition-colors hover:bg-secondary/50"
-                    >
-                      <td className="py-3 pr-4 font-display font-bold text-accent">{i + 1}</td>
-                      <td className="py-3 pr-4">
-                        <Link
-                          to={`/investor/${inv.slug}`}
-                          className="font-medium text-foreground hover:text-accent"
-                        >
-                          {inv.name}
-                        </Link>
-                        <p className="text-xs text-muted-foreground">{inv.location}</p>
-                      </td>
-                      <td className="py-3 pr-4">
-                        <span className="rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground">
-                          {inv.type}
-                        </span>
-                      </td>
-                      <td className="py-3 pr-4 text-right font-medium text-foreground">
-                        {inv.laoDeals}
-                      </td>
-                      <td className="py-3 text-right font-display font-bold text-accent">
-                        ${inv.laoFunded}M
-                      </td>
+          {/* Monthly Trends */}
+          <div className="mb-8">
+            <MonthlyFundingChart rounds={allRounds} />
+          </div>
+
+          {/* Year-over-Year Growth */}
+          <div className="mb-8">
+            <YoYGrowth rounds={allRounds} />
+          </div>
+
+          {/* Activity Feed + Investors Leaderboard */}
+          <div className="mb-8 grid gap-6 lg:grid-cols-2">
+            {/* Recent Activity */}
+            <RecentActivityFeed />
+
+            {/* Top Investors Leaderboard */}
+            <div className="rounded-xl border border-border bg-card p-6">
+              <div className="mb-4 flex items-center justify-between">
+                <h2 className="font-display text-lg font-semibold text-foreground">
+                  Top Investors in Laos
+                </h2>
+                <Link
+                  to="/investors"
+                  className="flex items-center gap-1 text-sm font-medium text-accent hover:underline"
+                >
+                  View All <ArrowUpRight className="h-4 w-4" />
+                </Link>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <thead>
+                    <tr className="border-b border-border text-muted-foreground">
+                      <th className="pb-3 pr-4 font-medium">#</th>
+                      <th className="pb-3 pr-4 font-medium">Investor</th>
+                      <th className="pb-3 pr-4 font-medium">Type</th>
+                      <th className="pb-3 pr-4 font-medium text-right">Deals</th>
+                      <th className="pb-3 font-medium text-right">Funding</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {topInvestors.map((inv, i) => (
+                      <tr
+                        key={inv.slug}
+                        className="border-b border-border/50 transition-colors hover:bg-secondary/50"
+                      >
+                        <td className="py-3 pr-4 font-display font-bold text-accent">
+                          {i + 1}
+                        </td>
+                        <td className="py-3 pr-4">
+                          <Link
+                            to={`/investor/${inv.slug}`}
+                            className="font-medium text-foreground hover:text-accent"
+                          >
+                            {inv.name}
+                          </Link>
+                          <p className="text-xs text-muted-foreground">
+                            {inv.location}
+                          </p>
+                        </td>
+                        <td className="py-3 pr-4">
+                          <span className="rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground">
+                            {inv.type}
+                          </span>
+                        </td>
+                        <td className="py-3 pr-4 text-right font-medium text-foreground">
+                          {inv.laoDeals}
+                        </td>
+                        <td className="py-3 text-right font-display font-bold text-accent">
+                          ${inv.laoFunded}M
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
