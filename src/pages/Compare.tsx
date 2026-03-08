@@ -117,7 +117,7 @@ const Compare = () => {
         {companyA && companyB && (
           <main className="container mx-auto px-4 py-8 space-y-8">
             {/* Company headers */}
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
               {[companyA, companyB].map((c) => (
                 <Link key={c.slug} to={`/company/${c.slug}`} className="group flex items-center gap-4 rounded-xl border border-border bg-card p-5 transition-all hover:border-accent/40 hover:shadow-lg">
                   <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-border bg-card overflow-hidden">
@@ -152,7 +152,7 @@ const Compare = () => {
             </div>
 
             {/* Charts */}
-            <div className="grid gap-8 lg:grid-cols-2">
+            <div className="grid gap-8 lg:grid-cols-2 [&_.recharts-wrapper]:!max-w-full">
               {/* Radar chart */}
               <div className="rounded-xl border border-border bg-card p-6">
                 <h3 className="mb-4 font-display text-lg font-bold text-foreground">Overall Comparison</h3>
