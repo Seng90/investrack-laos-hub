@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   TrendingUp,
@@ -24,6 +24,9 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import PageTransition from "@/components/PageTransition";
+import DashboardFilters, {
+  type DashboardFilterState,
+} from "@/components/dashboard/DashboardFilters";
 import MonthlyFundingChart from "@/components/dashboard/MonthlyFundingChart";
 import YoYGrowth from "@/components/dashboard/YoYGrowth";
 import RecentActivityFeed from "@/components/dashboard/RecentActivityFeed";
@@ -46,15 +49,47 @@ const COLORS = [
   "hsl(25, 75%, 55%)",
 ];
 
+const defaultYearBounds = (): [number, number] => {
+  const years = companies.flatMap((c) =>
+    c.fundingRounds.map((r) => parseInt(r.date.slice(0, 4)))
+  );
+  return [Math.min(...years), Math.max(...years)];
+};
+
 const Dashboard = () => {
-  const totalFunding = useMemo(
-    () => companies.reduce((sum, c) => sum + parseFunding(c.funding), 0),
-    []
+  const [filters, setFilters] = useState<DashboardFilterState>({
+    sector: "All Sectors",
+    yearRange: defaultYearBounds(),
+    investorType: "All Types",
+  });
+
+  // Filtered companies
+  const filteredCompanies = useMemo(
+    () =>
+      companies.filter(
+        (c) => filters.sector === "All Sectors" || c.sector === filters.sector
+      ),
+    [filters.sector]
   );
 
+  // Filtered investors
+  const filteredInvestors = useMemo(
+    () =>
+      investors.filter(
+        (i) => filters.investorType === "All Types" || i.type === filters.investorType
+      ),
+    [filters.investorType]
+  );
+
+  const filteredInvestorSlugs = useMemo(
+    () => new Set(filteredInvestors.map((i) => i.slug)),
+    [filteredInvestors]
+  );
+
+  // All rounds filtered by sector + year range
   const allRounds = useMemo(
     () =>
-      companies
+      filteredCompanies
         .flatMap((c) =>
           c.fundingRounds.map((r) => ({
             ...r,
@@ -63,8 +98,17 @@ const Dashboard = () => {
             amountNum: parseFunding(r.amount),
           }))
         )
+        .filter((r) => {
+          const year = parseInt(r.date.slice(0, 4));
+          return year >= filters.yearRange[0] && year <= filters.yearRange[1];
+        })
         .sort((a, b) => a.date.localeCompare(b.date)),
-    []
+    [filteredCompanies, filters.yearRange]
+  );
+
+  const totalFunding = useMemo(
+    () => allRounds.reduce((sum, r) => sum + r.amountNum, 0),
+    [allRounds]
   );
 
   const fundingOverTime = useMemo(() => {
@@ -80,34 +124,48 @@ const Dashboard = () => {
 
   const sectorDistribution = useMemo(() => {
     const map: Record<string, number> = {};
-    companies.forEach((c) => {
-      map[c.sector] = (map[c.sector] || 0) + parseFunding(c.funding);
+    allRounds.forEach((r) => {
+      map[r.sector] = (map[r.sector] || 0) + r.amountNum;
     });
     return Object.entries(map)
       .map(([name, value]) => ({ name, value }))
       .sort((a, b) => b.value - a.value);
-  }, []);
+  }, [allRounds]);
 
   const topInvestors = useMemo(
     () =>
-      [...investors]
-        .map((inv) => ({
-          ...inv,
-          laoDeals: inv.portfolio.length,
-          laoFunded: inv.portfolio.reduce(
-            (s, p) => s + parseFunding(p.amount),
-            0
-          ),
-        }))
+      filteredInvestors
+        .map((inv) => {
+          const filteredPortfolio = inv.portfolio.filter((p) => {
+            const year = parseInt(p.date.slice(0, 4));
+            const companyMatch =
+              filters.sector === "All Sectors" ||
+              filteredCompanies.some((c) => c.slug === p.slug);
+            return (
+              companyMatch &&
+              year >= filters.yearRange[0] &&
+              year <= filters.yearRange[1]
+            );
+          });
+          return {
+            ...inv,
+            laoDeals: filteredPortfolio.length,
+            laoFunded: filteredPortfolio.reduce(
+              (s, p) => s + parseFunding(p.amount),
+              0
+            ),
+          };
+        })
+        .filter((inv) => inv.laoDeals > 0)
         .sort((a, b) => b.laoFunded - a.laoFunded)
         .slice(0, 6),
-    []
+    [filteredInvestors, filteredCompanies, filters]
   );
 
   const stats = [
     { label: "Total Funding", value: `$${totalFunding.toFixed(1)}M`, icon: DollarSign },
-    { label: "Companies Tracked", value: companies.length.toString(), icon: Building2 },
-    { label: "Active Investors", value: investors.length.toString(), icon: Users },
+    { label: "Companies Tracked", value: filteredCompanies.length.toString(), icon: Building2 },
+    { label: "Active Investors", value: filteredInvestors.length.toString(), icon: Users },
     { label: "Funding Rounds", value: allRounds.length.toString(), icon: TrendingUp },
   ];
 
@@ -127,6 +185,9 @@ const Dashboard = () => {
             </p>
           </div>
 
+          {/* Filters */}
+          <DashboardFilters filters={filters} onChange={setFilters} />
+
           {/* Stats */}
           <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
             {stats.map((s) => (
@@ -145,7 +206,7 @@ const Dashboard = () => {
             ))}
           </div>
 
-          {/* Charts: Cumulative + Sector */}
+          {/* Charts */}
           <div className="mb-8 grid gap-6 lg:grid-cols-2">
             <div className="rounded-xl border border-border bg-card p-6">
               <h2 className="mb-4 font-display text-lg font-semibold text-foreground">
@@ -226,10 +287,8 @@ const Dashboard = () => {
 
           {/* Activity Feed + Investors Leaderboard */}
           <div className="mb-8 grid gap-6 lg:grid-cols-2">
-            {/* Recent Activity */}
             <RecentActivityFeed />
 
-            {/* Top Investors Leaderboard */}
             <div className="rounded-xl border border-border bg-card p-6">
               <div className="mb-4 flex items-center justify-between">
                 <h2 className="font-display text-lg font-semibold text-foreground">
@@ -286,6 +345,13 @@ const Dashboard = () => {
                         </td>
                       </tr>
                     ))}
+                    {topInvestors.length === 0 && (
+                      <tr>
+                        <td colSpan={5} className="py-8 text-center text-muted-foreground">
+                          No investors match the current filters
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>
