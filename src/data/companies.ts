@@ -43,7 +43,9 @@ export interface Company {
   news: NewsItem[];
 }
 
-export const companies: Company[] = [
+import { extraCompanies } from "./companiesExtra";
+
+const baseCompanies: Company[] = [
   {
     slug: "bcel",
     name: "BCEL",
