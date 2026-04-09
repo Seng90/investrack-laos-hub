@@ -2,7 +2,6 @@ import { useState, useMemo } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { Search, MapPin, SlidersHorizontal, X, Briefcase } from "lucide-react";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { companies } from "@/data/companies";
@@ -11,6 +10,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetClose,
+} from "@/components/ui/sheet";
 import {
   Select,
   SelectContent,
