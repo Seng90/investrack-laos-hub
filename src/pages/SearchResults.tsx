@@ -165,11 +165,13 @@ const SearchResults = () => {
 
   const filteredCompanies = useMemo(() => {
     return companies.filter((c) => {
+      const q = query.toLowerCase();
       const matchesQuery =
         !query ||
-        c.name.toLowerCase().includes(query.toLowerCase()) ||
-        c.description.toLowerCase().includes(query.toLowerCase()) ||
-        c.sector.toLowerCase().includes(query.toLowerCase());
+        c.name.toLowerCase().includes(q) ||
+        c.description.toLowerCase().includes(q) ||
+        c.sector.toLowerCase().includes(q) ||
+        q.includes(c.sector.toLowerCase().split(" ")[0]);
       const matchesSector = selectedSectors.length === 0 || selectedSectors.includes(c.sector);
       const matchesStage = selectedStages.length === 0 || selectedStages.includes(c.stage);
       const matchesLocation = !selectedLocation || c.location === selectedLocation;

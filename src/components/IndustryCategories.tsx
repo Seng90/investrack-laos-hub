@@ -29,7 +29,7 @@ const IndustryCategories = () => {
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map((cat, i) => (
             <Link
-              to={`/search?q=${encodeURIComponent(cat.name)}`}
+              to={`/search?q=${encodeURIComponent(cat.name)}&sector=${encodeURIComponent(cat.name)}`}
               key={cat.name}
               className="group relative cursor-pointer overflow-hidden rounded-xl border border-border bg-card p-5 transition-all hover:border-accent/40 hover:shadow-lg hover:-translate-y-1 animate-fade-in block"
               style={{ animationDelay: `${i * 0.06}s` }}
