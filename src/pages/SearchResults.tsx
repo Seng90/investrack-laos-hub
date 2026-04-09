@@ -256,7 +256,7 @@ const SearchResults = () => {
             <p className="text-sm text-muted-foreground">
               {filteredCompanies.length} result{filteredCompanies.length !== 1 && "s"}
             </p>
-            <Button variant="outline" size="sm" onClick={() => setShowMobileFilters(!showMobileFilters)}>
+            <Button variant="outline" size="sm" onClick={() => setShowMobileFilters(true)}>
               <SlidersHorizontal className="mr-1 h-4 w-4" />
               Filters
               {activeFilterCount > 0 && (
@@ -267,12 +267,18 @@ const SearchResults = () => {
             </Button>
           </div>
 
-          {/* Mobile filters drawer */}
-          {showMobileFilters && (
-            <div className="mb-6 rounded-xl border border-border bg-card p-5 lg:hidden">
+          {/* Mobile filters bottom sheet */}
+          <Sheet open={showMobileFilters} onOpenChange={setShowMobileFilters}>
+            <SheetContent side="bottom" className="max-h-[85vh] overflow-y-auto rounded-t-2xl px-6 pb-8 pt-2">
+              <SheetHeader className="mb-4">
+                <SheetTitle className="font-display text-base">Filters</SheetTitle>
+              </SheetHeader>
               <FilterPanel {...filterProps} />
-            </div>
-          )}
+              <Button className="mt-6 w-full" onClick={() => setShowMobileFilters(false)}>
+                Show {filteredCompanies.length} result{filteredCompanies.length !== 1 && "s"}
+              </Button>
+            </SheetContent>
+          </Sheet>
 
           <div className="flex gap-8">
             {activeTab === "companies" && (
