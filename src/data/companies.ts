@@ -44,6 +44,7 @@ export interface Company {
 }
 
 import { extraCompanies } from "./companiesExtra";
+import { extraCompanies2 } from "./companiesExtra2";
 
 const baseCompanies: Company[] = [
   {
