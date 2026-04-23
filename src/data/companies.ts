@@ -44,6 +44,7 @@ export interface Company {
 }
 
 import { extraCompanies } from "./companiesExtra";
+import { extraCompanies2 } from "./companiesExtra2";
 
 const baseCompanies: Company[] = [
   {
@@ -212,7 +213,7 @@ const baseCompanies: Company[] = [
   },
 ];
 
-export const companies: Company[] = [...baseCompanies, ...extraCompanies];
+export const companies: Company[] = [...baseCompanies, ...extraCompanies, ...extraCompanies2];
 
 export const getCompanyBySlug = (slug: string): Company | undefined => {
   return companies.find((c) => c.slug === slug);
