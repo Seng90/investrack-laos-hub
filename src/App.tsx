@@ -16,6 +16,7 @@ import SignIn from "./pages/SignIn";
 import Compare from "./pages/Compare";
 import NewsFunding from "./pages/NewsFunding";
 import Dashboard from "./pages/Dashboard";
+import Pricing from "./pages/Pricing";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ function AnimatedRoutes() {
         <Route path="/compare" element={<Compare />} />
         <Route path="/news-funding" element={<NewsFunding />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/pricing" element={<Pricing />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="*" element={<NotFound />} />
