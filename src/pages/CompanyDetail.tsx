@@ -252,21 +252,6 @@ const CompanyDetail = () => {
             </div>
           </TabsContent>
 
-          {/* News Tab */}
-          <TabsContent value="news" className="animate-fade-in">
-            <h2 className="font-display text-xl font-bold text-foreground">Latest News</h2>
-            <div className="mt-6 space-y-4">
-              {company.news.map((item, i) => (
-                <a key={i} href={item.url} className="group flex flex-col gap-2 rounded-xl border border-border bg-card p-6 transition-all hover:border-accent/40 hover:shadow-md sm:flex-row sm:items-center sm:justify-between">
-                  <div>
-                    <p className="font-display font-semibold text-foreground group-hover:text-accent transition-colors">{item.title}</p>
-                    <p className="mt-1 text-sm text-muted-foreground">{item.source} · {new Date(item.date).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</p>
-                  </div>
-                  <ExternalLink className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-accent transition-colors" />
-                </a>
-              ))}
-            </div>
-          </TabsContent>
         </Tabs>
       </main>
 

@@ -29,9 +29,6 @@ const Navbar = () => {
           <Link to="/investors" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
             Investors
           </Link>
-          <Link to="/news-funding" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
-            News & Funding
-          </Link>
           <Link to="/compare" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
             Compare
           </Link>
