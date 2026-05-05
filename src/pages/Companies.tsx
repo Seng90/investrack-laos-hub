@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Search, MapPin, Users, Calendar, ArrowRight, Building2, TrendingUp, Globe, Sparkles, Trophy, Newspaper } from "lucide-react";
+import { Search, MapPin, Users, Calendar, ArrowRight, Building2, TrendingUp, Globe, Sparkles, Trophy } from "lucide-react";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
