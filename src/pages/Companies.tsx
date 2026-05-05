@@ -143,17 +143,6 @@ const FeaturedCard = ({ company, index }: { company: Company; index: number }) =
           </div>
         </div>
 
-        {/* Latest news */}
-        {company.news[0] && (
-          <div className="mb-5 flex items-start gap-2 rounded-xl bg-accent/5 border border-accent/10 px-4 py-3">
-            <Newspaper className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-            <div>
-              <p className="text-xs font-medium text-foreground line-clamp-1">{company.news[0].title}</p>
-              <p className="text-[10px] text-muted-foreground">{company.news[0].source} · {company.news[0].date}</p>
-            </div>
-          </div>
-        )}
-
         {/* Footer */}
         <div className="mt-auto flex items-center justify-between border-t border-border pt-4">
           <Badge variant="secondary" className="rounded-lg text-xs">

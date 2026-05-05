@@ -87,7 +87,7 @@ const Navbar = () => {
             <Link to="/" className="text-sm font-medium text-muted-foreground">Home</Link>
             <Link to="/companies" className="text-sm font-medium text-muted-foreground">Companies</Link>
             <Link to="/investors" className="text-sm font-medium text-muted-foreground">Investors</Link>
-            <Link to="/news-funding" className="text-sm font-medium text-muted-foreground">News & Funding</Link>
+            
             <Link to="/compare" className="text-sm font-medium text-muted-foreground">Compare</Link>
             <Link to="/dashboard" className="text-sm font-medium text-muted-foreground">Dashboard</Link>
             <Link to="/pricing" className="text-sm font-medium text-accent">Pricing · Pro</Link>

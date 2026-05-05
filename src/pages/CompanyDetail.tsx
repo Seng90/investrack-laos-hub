@@ -116,7 +116,7 @@ const CompanyDetail = () => {
             <TabsTrigger value="performance" className="rounded-md data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"><TrendingUp className="mr-1.5 h-4 w-4" />Performance</TabsTrigger>
             <TabsTrigger value="funding" className="rounded-md data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">Funding History</TabsTrigger>
             <TabsTrigger value="team" className="rounded-md data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">Team</TabsTrigger>
-            <TabsTrigger value="news" className="rounded-md data-[state=active]:bg-accent data-[state=active]:text-accent-foreground">News</TabsTrigger>
+            
           </TabsList>
 
           {/* Overview Tab */}
