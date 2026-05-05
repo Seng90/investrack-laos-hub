@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Search, MapPin, Users, Calendar, ArrowRight, Building2, TrendingUp, Globe, Sparkles, Trophy, Newspaper } from "lucide-react";
+import { Search, MapPin, Users, Calendar, ArrowRight, Building2, TrendingUp, Globe, Sparkles, Trophy } from "lucide-react";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -142,17 +142,6 @@ const FeaturedCard = ({ company, index }: { company: Company; index: number }) =
             <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Location</p>
           </div>
         </div>
-
-        {/* Latest news */}
-        {company.news[0] && (
-          <div className="mb-5 flex items-start gap-2 rounded-xl bg-accent/5 border border-accent/10 px-4 py-3">
-            <Newspaper className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-            <div>
-              <p className="text-xs font-medium text-foreground line-clamp-1">{company.news[0].title}</p>
-              <p className="text-[10px] text-muted-foreground">{company.news[0].source} · {company.news[0].date}</p>
-            </div>
-          </div>
-        )}
 
         {/* Footer */}
         <div className="mt-auto flex items-center justify-between border-t border-border pt-4">

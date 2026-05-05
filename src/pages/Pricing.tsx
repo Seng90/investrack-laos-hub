@@ -15,12 +15,10 @@ const FEATURES = {
     "Basic company info (sector, location, size)",
     "Industry & sector navigation",
     "Limited search filters",
-    "Read 3 news articles per month",
   ],
   pro: [
     "Everything in Free",
     "Full funding rounds & investor history",
-    "Unlimited news & insights access",
     "Side-by-side company comparison (up to 4)",
     "CSV data exports",
     "Advanced search & saved filters",
@@ -32,7 +30,7 @@ const FEATURES = {
 
 const GATED_AREAS = [
   { icon: Zap, label: "Funding Rounds", desc: "Round size, valuations, lead investors, dates." },
-  { icon: Sparkles, label: "News & Insights", desc: "Full archive of curated news per company & sector." },
+  { icon: Sparkles, label: "Team & Leadership", desc: "Full leadership details and key personnel per company." },
   { icon: Crown, label: "Compare Tool", desc: "Radar charts and head-to-head metric comparison." },
   { icon: Lock, label: "Data Exports", desc: "Download filtered company lists as CSV." },
 ];
@@ -249,7 +247,7 @@ const Pricing = () => {
                   ["Basic company profile", true, true],
                   ["Funding rounds & valuations", false, true],
                   ["Investor & cap table details", false, true],
-                  ["News articles per month", "3", "Unlimited"],
+                  
                   ["Compare companies (up to 4)", false, true],
                   ["CSV exports", false, true],
                   ["Email alerts", false, true],

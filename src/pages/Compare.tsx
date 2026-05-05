@@ -24,16 +24,12 @@ const generateRadarData = (a: Company, b: Company) => {
   const bRounds = b.fundingRounds.length;
   const aTeam = a.team.length;
   const bTeam = b.team.length;
-  const aNews = a.news.length;
-  const bNews = b.news.length;
-
   const normalize = (val: number, max: number) => max > 0 ? Math.round((val / max) * 100) : 0;
   const maxFund = Math.max(aFund, bFund);
   const maxEmp = Math.max(aEmp, bEmp);
   const maxAge = Math.max(aAge, bAge);
   const maxRounds = Math.max(aRounds, bRounds);
   const maxTeam = Math.max(aTeam, bTeam);
-  const maxNews = Math.max(aNews, bNews);
 
   return [
     { metric: "Funding", [a.name]: normalize(aFund, maxFund), [b.name]: normalize(bFund, maxFund) },
@@ -41,7 +37,6 @@ const generateRadarData = (a: Company, b: Company) => {
     { metric: "Company Age", [a.name]: normalize(aAge, maxAge), [b.name]: normalize(bAge, maxAge) },
     { metric: "Funding Rounds", [a.name]: normalize(aRounds, maxRounds), [b.name]: normalize(bRounds, maxRounds) },
     { metric: "Leadership", [a.name]: normalize(aTeam, maxTeam), [b.name]: normalize(bTeam, maxTeam) },
-    { metric: "News Coverage", [a.name]: normalize(aNews, maxNews), [b.name]: normalize(bNews, maxNews) },
   ];
 };
 
