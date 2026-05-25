@@ -1,11 +1,25 @@
-import { Search, Menu, Moon, Sun } from "lucide-react";
+import { Search, Menu, Moon, Sun, LogOut } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "@/components/ThemeProvider";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast({ title: "Signed out", description: "See you next time." });
+    navigate("/");
+  };
+
+  const displayName = (user?.user_metadata?.full_name as string) || user?.email?.split("@")[0];
+
 
   return (
     <nav className="sticky top-0 z-50 border-b border-border bg-card/80 backdrop-blur-lg">
@@ -53,12 +67,27 @@ const Navbar = () => {
             <Search className="h-4 w-4" />
             Search...
           </button>
-          <Link to="/sign-in" className="h-9 rounded-lg border border-border px-4 text-sm font-medium text-foreground transition-colors hover:bg-secondary inline-flex items-center">
-            Sign In
-          </Link>
-          <Link to="/sign-up" className="h-9 rounded-lg bg-accent px-4 text-sm font-medium text-accent-foreground transition-colors hover:opacity-90 inline-flex items-center">
-            Sign Up
-          </Link>
+          {user ? (
+            <>
+              <span className="text-sm text-muted-foreground hidden lg:inline">Hi, {displayName}</span>
+              <button
+                onClick={handleSignOut}
+                className="h-9 inline-flex items-center gap-1.5 rounded-lg border border-border px-3 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
+              >
+                <LogOut className="h-4 w-4" />
+                Sign Out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/sign-in" className="h-9 rounded-lg border border-border px-4 text-sm font-medium text-foreground transition-colors hover:bg-secondary inline-flex items-center">
+                Sign In
+              </Link>
+              <Link to="/sign-up" className="h-9 rounded-lg bg-accent px-4 text-sm font-medium text-accent-foreground transition-colors hover:opacity-90 inline-flex items-center">
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
@@ -88,10 +117,18 @@ const Navbar = () => {
             <Link to="/compare" className="text-sm font-medium text-muted-foreground">Compare</Link>
             <Link to="/dashboard" className="text-sm font-medium text-muted-foreground">Dashboard</Link>
             <Link to="/pricing" className="text-sm font-medium text-accent">Pricing · Pro</Link>
-            <Link to="/sign-in" className="text-sm font-medium text-muted-foreground">Sign In</Link>
-            <Link to="/sign-up" className="mt-2 h-9 rounded-lg bg-accent px-4 text-sm font-medium text-accent-foreground inline-flex items-center justify-center">
-              Sign Up
-            </Link>
+            {user ? (
+              <button onClick={handleSignOut} className="mt-2 h-9 rounded-lg border border-border px-4 text-sm font-medium text-foreground inline-flex items-center justify-center">
+                Sign Out ({displayName})
+              </button>
+            ) : (
+              <>
+                <Link to="/sign-in" className="text-sm font-medium text-muted-foreground">Sign In</Link>
+                <Link to="/sign-up" className="mt-2 h-9 rounded-lg bg-accent px-4 text-sm font-medium text-accent-foreground inline-flex items-center justify-center">
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}
