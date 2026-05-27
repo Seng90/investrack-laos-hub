@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Globe, MapPin, Users, Calendar, ExternalLink, TrendingUp } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -74,10 +74,6 @@ const CompanyDetail = () => {
       {/* Header */}
       <header className="border-b border-border bg-card">
         <div className="container mx-auto px-4 py-8">
-          <Breadcrumbs items={[
-            { label: "Search", href: "/search" },
-            { label: company.name },
-          ]} />
 
           <div className="mt-4 flex flex-col gap-6 sm:flex-row sm:items-start">
             <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-card border border-border overflow-hidden">

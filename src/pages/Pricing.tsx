@@ -3,7 +3,7 @@ import { Check, Sparkles, Lock, Zap, Crown, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import Breadcrumbs from "@/components/Breadcrumbs";
+
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -63,7 +63,7 @@ const Pricing = () => {
       <section className="relative overflow-hidden border-b border-border bg-gradient-to-b from-secondary/40 to-background">
         <div className="absolute inset-0 -z-10 opacity-40 [background-image:radial-gradient(hsl(var(--accent)/0.15)_1px,transparent_1px)] [background-size:24px_24px]" />
         <div className="container mx-auto px-4 pt-6">
-          <Breadcrumbs items={[{ label: "Membership" }]} />
+          
         </div>
         <div className="container mx-auto px-4 py-16 text-center md:py-24">
           <motion.div

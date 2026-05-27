@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { Search, MapPin, SlidersHorizontal, X, Briefcase } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { companies } from "@/data/companies";
@@ -235,7 +235,7 @@ const SearchResults = () => {
         {/* Search header */}
         <div className="border-b border-border bg-card">
           <div className="container mx-auto px-4 py-8">
-            <Breadcrumbs items={[{ label: "Search" }]} />
+            
             <h1 className="mb-4 font-display text-2xl font-bold text-foreground md:text-3xl">Search</h1>
             <form onSubmit={handleSearch} className="flex max-w-2xl gap-2">
               <div className="relative flex-1">

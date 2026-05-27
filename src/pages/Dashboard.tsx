@@ -22,7 +22,7 @@ import {
 } from "recharts";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import Breadcrumbs from "@/components/Breadcrumbs";
+
 import PageTransition from "@/components/PageTransition";
 import DashboardFilters, {
   type DashboardFilterState,
@@ -174,7 +174,7 @@ const Dashboard = () => {
       <Navbar />
       <main className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-8">
-          <Breadcrumbs items={[{ label: "Dashboard" }]} />
+          
 
           <div className="mb-8">
             <h1 className="font-display text-3xl font-bold text-foreground md:text-4xl">

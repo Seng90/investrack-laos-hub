@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
-import Breadcrumbs from "@/components/Breadcrumbs";
+
 import { companies, Company } from "@/data/companies";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -268,7 +268,7 @@ const Companies = () => {
           </div>
 
           <div className="container relative mx-auto px-4 py-16 md:py-20">
-            <Breadcrumbs items={[{ label: "Companies" }]} variant="light" />
+            
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
