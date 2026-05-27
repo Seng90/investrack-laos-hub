@@ -5,7 +5,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
-import Breadcrumbs from "@/components/Breadcrumbs";
+
 import { companies, Company } from "@/data/companies";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
@@ -73,7 +73,7 @@ const Compare = () => {
 
         <header className="border-b border-border bg-card">
           <div className="container mx-auto px-4 py-8">
-            <Breadcrumbs items={[{ label: "Companies", href: "/companies" }, { label: "Compare" }]} />
+            
             <h1 className="mt-4 font-display text-3xl font-bold text-foreground md:text-4xl">
               Compare <span className="text-accent">Companies</span>
             </h1>

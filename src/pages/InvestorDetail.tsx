@@ -10,7 +10,7 @@ import {
   BarChart3,
   ExternalLink,
 } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
@@ -122,12 +122,6 @@ const InvestorDetail = () => {
         <header className="relative overflow-hidden border-b border-border bg-card">
           <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-primary/5 pointer-events-none" />
           <div className="container relative mx-auto px-4 py-10">
-            <Breadcrumbs
-              items={[
-                { label: "Investors", href: "/investors" },
-                { label: investor.name },
-              ]}
-            />
 
             <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-start">
               <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-primary font-display text-4xl font-bold text-primary-foreground shadow-lg">

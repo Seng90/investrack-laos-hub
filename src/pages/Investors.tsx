@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Building2, MapPin, Briefcase, ExternalLink } from "lucide-react";
-import Breadcrumbs from "@/components/Breadcrumbs";
+
 import Navbar from "@/components/Navbar";
 import PageTransition from "@/components/PageTransition";
 import Footer from "@/components/Footer";
@@ -22,7 +22,7 @@ const Investors = () => {
 
       <header className="border-b border-border bg-card">
         <div className="container mx-auto px-4 py-10">
-          <Breadcrumbs items={[{ label: "Investors" }]} />
+          
           <h1 className="font-display text-3xl font-bold text-foreground md:text-4xl">Investor Directory</h1>
           <p className="mt-2 max-w-2xl text-muted-foreground">Explore venture capital firms, angel networks, and development funds active in the Lao startup ecosystem.</p>
         </div>
