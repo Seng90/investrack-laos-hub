@@ -50,6 +50,7 @@ const stageBadgeClass = (stage: string) => {
 const CompanyDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const company = getCompanyBySlug(slug || "");
+  const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
 
   if (!company) {
     return (
