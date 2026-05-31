@@ -238,7 +238,12 @@ const CompanyDetail = () => {
             <h2 className="font-display text-xl font-bold text-foreground">Leadership Team</h2>
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {company.team.map((member, i) => (
-                <div key={i} className="flex items-center gap-4 rounded-xl border border-border bg-card p-5">
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setSelectedMember(member)}
+                  className="flex items-center gap-4 rounded-xl border border-border bg-card p-5 text-left transition-all hover:border-accent hover:shadow-md focus:outline-none focus:ring-2 focus:ring-accent"
+                >
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary font-display text-lg font-bold text-primary-foreground">
                     {member.name.charAt(0)}
                   </div>
@@ -246,7 +251,7 @@ const CompanyDetail = () => {
                     <p className="font-display font-semibold text-foreground">{member.name}</p>
                     <p className="text-sm text-muted-foreground">{member.role}</p>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </TabsContent>
