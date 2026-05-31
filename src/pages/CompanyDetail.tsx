@@ -259,6 +259,50 @@ const CompanyDetail = () => {
         </Tabs>
       </main>
 
+      <Dialog open={!!selectedMember} onOpenChange={(open) => !open && setSelectedMember(null)}>
+        <DialogContent className="sm:max-w-md">
+          {selectedMember && (
+            <>
+              <DialogHeader>
+                <div className="flex items-center gap-4">
+                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-primary font-display text-2xl font-bold text-primary-foreground">
+                    {selectedMember.name.charAt(0)}
+                  </div>
+                  <div className="text-left">
+                    <DialogTitle className="font-display text-xl">{selectedMember.name}</DialogTitle>
+                    <DialogDescription className="text-accent font-medium">{selectedMember.role}</DialogDescription>
+                  </div>
+                </div>
+              </DialogHeader>
+              <Separator />
+              <div className="space-y-4 text-sm">
+                <div>
+                  <h4 className="font-display text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">About</h4>
+                  <p className="leading-relaxed text-foreground">
+                    {selectedMember.name} serves as {selectedMember.role} at {company.name}, bringing extensive
+                    experience in the {company.sector.toLowerCase()} sector. Based in {company.location}, they help
+                    drive the company's strategic direction and growth.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-display text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">Contact</h4>
+                  <div className="space-y-2">
+                    <a href="#" className="flex items-center gap-2 text-foreground hover:text-accent">
+                      <Mail className="h-4 w-4" />
+                      {selectedMember.name.toLowerCase().split(" ").join(".")}@{company.website}
+                    </a>
+                    <a href="#" className="flex items-center gap-2 text-foreground hover:text-accent">
+                      <Linkedin className="h-4 w-4" />
+                      LinkedIn profile
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
       <Footer />
     </div>
     </PageTransition>
