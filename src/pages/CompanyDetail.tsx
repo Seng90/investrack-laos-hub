@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Globe, MapPin, Users, Calendar, ExternalLink, TrendingUp } from "lucide-react";
+import { useState } from "react";
+import { ArrowLeft, Globe, MapPin, Users, Calendar, ExternalLink, TrendingUp, Mail, Linkedin } from "lucide-react";
 
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import Navbar from "@/components/Navbar";
@@ -8,7 +9,8 @@ import PageTransition from "@/components/PageTransition";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { getCompanyBySlug } from "@/data/companies";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { getCompanyBySlug, type TeamMember } from "@/data/companies";
 
 // Generate mock performance data based on company
 const generatePerformanceData = (companyName: string) => {
@@ -48,6 +50,7 @@ const stageBadgeClass = (stage: string) => {
 const CompanyDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const company = getCompanyBySlug(slug || "");
+  const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
 
   if (!company) {
     return (
@@ -235,7 +238,12 @@ const CompanyDetail = () => {
             <h2 className="font-display text-xl font-bold text-foreground">Leadership Team</h2>
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {company.team.map((member, i) => (
-                <div key={i} className="flex items-center gap-4 rounded-xl border border-border bg-card p-5">
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setSelectedMember(member)}
+                  className="flex items-center gap-4 rounded-xl border border-border bg-card p-5 text-left transition-all hover:border-accent hover:shadow-md focus:outline-none focus:ring-2 focus:ring-accent"
+                >
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary font-display text-lg font-bold text-primary-foreground">
                     {member.name.charAt(0)}
                   </div>
@@ -243,13 +251,57 @@ const CompanyDetail = () => {
                     <p className="font-display font-semibold text-foreground">{member.name}</p>
                     <p className="text-sm text-muted-foreground">{member.role}</p>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </TabsContent>
 
         </Tabs>
       </main>
+
+      <Dialog open={!!selectedMember} onOpenChange={(open) => !open && setSelectedMember(null)}>
+        <DialogContent className="sm:max-w-md">
+          {selectedMember && (
+            <>
+              <DialogHeader>
+                <div className="flex items-center gap-4">
+                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-primary font-display text-2xl font-bold text-primary-foreground">
+                    {selectedMember.name.charAt(0)}
+                  </div>
+                  <div className="text-left">
+                    <DialogTitle className="font-display text-xl">{selectedMember.name}</DialogTitle>
+                    <DialogDescription className="text-accent font-medium">{selectedMember.role}</DialogDescription>
+                  </div>
+                </div>
+              </DialogHeader>
+              <Separator />
+              <div className="space-y-4 text-sm">
+                <div>
+                  <h4 className="font-display text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">About</h4>
+                  <p className="leading-relaxed text-foreground">
+                    {selectedMember.name} serves as {selectedMember.role} at {company.name}, bringing extensive
+                    experience in the {company.sector.toLowerCase()} sector. Based in {company.location}, they help
+                    drive the company's strategic direction and growth.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-display text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">Contact</h4>
+                  <div className="space-y-2">
+                    <a href="#" className="flex items-center gap-2 text-foreground hover:text-accent">
+                      <Mail className="h-4 w-4" />
+                      {selectedMember.name.toLowerCase().split(" ").join(".")}@{company.website}
+                    </a>
+                    <a href="#" className="flex items-center gap-2 text-foreground hover:text-accent">
+                      <Linkedin className="h-4 w-4" />
+                      LinkedIn profile
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
 
       <Footer />
     </div>
