@@ -9,6 +9,12 @@ export interface TeamMember {
   name: string;
   role: string;
   avatar?: string;
+  email?: string;
+  phone?: string;
+  linkedin?: string;
+  bio?: string;
+  expertise?: string[];
+  accomplishments?: string[];
 }
 
 export interface FundingRound {
