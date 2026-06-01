@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useState } from "react";
-import { ArrowLeft, Globe, MapPin, Users, Calendar, ExternalLink, TrendingUp, Mail, Linkedin } from "lucide-react";
+import { ArrowLeft, Globe, MapPin, Users, Calendar, ExternalLink, TrendingUp, Mail, Linkedin, Phone, Award } from "lucide-react";
 
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import Navbar from "@/components/Navbar";
@@ -8,9 +8,11 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { getCompanyBySlug, type TeamMember } from "@/data/companies";
+import { resolveTeamMember } from "@/lib/teamMember";
 
 // Generate mock performance data based on company
 const generatePerformanceData = (companyName: string) => {
