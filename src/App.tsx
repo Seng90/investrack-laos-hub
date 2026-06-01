@@ -9,6 +9,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import Index from "./pages/Index";
 import Companies from "./pages/Companies";
 import CompanyDetail from "./pages/CompanyDetail";
+import TeamMemberDetail from "./pages/TeamMemberDetail";
 import SearchResults from "./pages/SearchResults";
 import Investors from "./pages/Investors";
 import SignUp from "./pages/SignUp";
@@ -30,6 +31,7 @@ function AnimatedRoutes() {
         <Route path="/" element={<Index />} />
         <Route path="/companies" element={<Companies />} />
         <Route path="/company/:slug" element={<CompanyDetail />} />
+        <Route path="/company/:slug/team/:memberSlug" element={<TeamMemberDetail />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/investors" element={<Investors />} />
         <Route path="/investor/:slug" element={<InvestorDetail />} />

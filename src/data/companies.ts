@@ -9,6 +9,12 @@ export interface TeamMember {
   name: string;
   role: string;
   avatar?: string;
+  email?: string;
+  phone?: string;
+  linkedin?: string;
+  bio?: string;
+  expertise?: string[];
+  accomplishments?: string[];
 }
 
 export interface FundingRound {
@@ -217,4 +223,18 @@ export const companies: Company[] = [...baseCompanies, ...extraCompanies, ...ext
 
 export const getCompanyBySlug = (slug: string): Company | undefined => {
   return companies.find((c) => c.slug === slug);
+};
+
+export const slugifyMember = (name: string): string =>
+  name.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+export const getTeamMember = (
+  companySlug: string,
+  memberSlug: string,
+): { company: Company; member: TeamMember } | undefined => {
+  const company = getCompanyBySlug(companySlug);
+  if (!company) return undefined;
+  const member = company.team.find((m) => slugifyMember(m.name) === memberSlug);
+  if (!member) return undefined;
+  return { company, member };
 };
