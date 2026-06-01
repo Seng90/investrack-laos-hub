@@ -9,6 +9,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import Index from "./pages/Index";
 import Companies from "./pages/Companies";
 import CompanyDetail from "./pages/CompanyDetail";
+import TeamMemberDetail from "./pages/TeamMemberDetail";
 import SearchResults from "./pages/SearchResults";
 import Investors from "./pages/Investors";
 import SignUp from "./pages/SignUp";
