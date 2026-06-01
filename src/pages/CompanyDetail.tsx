@@ -277,33 +277,78 @@ const CompanyDetail = () => {
                 </div>
               </DialogHeader>
               <Separator />
-              <div className="space-y-4 text-sm">
-                <div>
-                  <h4 className="font-display text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">About</h4>
-                  <p className="leading-relaxed text-foreground">
-                    {selectedMember.name} serves as {selectedMember.role} at {company.name}, bringing extensive
-                    experience in the {company.sector.toLowerCase()} sector. Based in {company.location}, they help
-                    drive the company's strategic direction and growth.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-display text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">Contact</h4>
-                  <div className="space-y-2">
-                    <a href="#" className="flex items-center gap-2 text-foreground hover:text-accent">
-                      <Mail className="h-4 w-4" />
-                      {selectedMember.name.toLowerCase().split(" ").join(".")}@{company.website}
-                    </a>
-                    <a href="#" className="flex items-center gap-2 text-foreground hover:text-accent">
-                      <Linkedin className="h-4 w-4" />
-                      LinkedIn profile
-                    </a>
+              {(() => {
+                const resolved = resolveTeamMember(selectedMember, company);
+                return (
+                  <div className="space-y-5 text-sm">
+                    <div>
+                      <h4 className="font-display text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">Role</h4>
+                      <p className="text-foreground">{resolved.role} · {company.name}</p>
+                    </div>
+
+                    <div>
+                      <h4 className="font-display text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">About</h4>
+                      <p className="leading-relaxed text-foreground">{resolved.bio}</p>
+                    </div>
+
+                    <div>
+                      <h4 className="font-display text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">Expertise</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {resolved.expertise.map((tag) => (
+                          <Badge key={tag} variant="secondary" className="rounded-full">{tag}</Badge>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="font-display text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">Notable Accomplishments</h4>
+                      <ul className="space-y-1.5">
+                        {resolved.accomplishments.map((item) => (
+                          <li key={item} className="flex items-start gap-2 text-foreground">
+                            <Award className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h4 className="font-display text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">Contact</h4>
+                      <div className="grid gap-2 sm:grid-cols-3">
+                        <Button asChild variant="outline" size="sm">
+                          <a href={`mailto:${resolved.email}`}>
+                            <Mail className="h-4 w-4" /> Email
+                          </a>
+                        </Button>
+                        <Button asChild variant="outline" size="sm">
+                          <a href={resolved.linkedin} target="_blank" rel="noreferrer">
+                            <Linkedin className="h-4 w-4" /> LinkedIn
+                          </a>
+                        </Button>
+                        <Button asChild variant="outline" size="sm">
+                          <a href={`tel:${resolved.phone.replace(/\s+/g, "")}`}>
+                            <Phone className="h-4 w-4" /> Phone
+                          </a>
+                        </Button>
+                      </div>
+                    </div>
+
+                    <Separator />
+                    <Link
+                      to={`/company/${company.slug}/team/${resolved.slug}`}
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline"
+                      onClick={() => setSelectedMember(null)}
+                    >
+                      View full profile <ExternalLink className="h-4 w-4" />
+                    </Link>
                   </div>
-                </div>
-              </div>
+                );
+              })()}
             </>
           )}
         </DialogContent>
       </Dialog>
+
 
       <Footer />
     </div>
