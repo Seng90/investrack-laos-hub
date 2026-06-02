@@ -140,6 +140,7 @@ const FilterPanel = ({
 
 /* ── Main Component ── */
 const SearchResults = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const initialQuery = searchParams.get("q") || "";
   const initialSector = searchParams.get("sector") || "";
