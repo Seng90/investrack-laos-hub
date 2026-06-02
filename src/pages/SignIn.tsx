@@ -40,6 +40,18 @@ const SignIn = () => {
     navigate("/", { replace: true });
   };
 
+  const handleOAuth = async (provider: "google" | "apple") => {
+    setLoading(true);
+    const { error } = await lovable.auth.signInWithOAuth(provider, {
+      redirect_uri: `${window.location.origin}/`,
+    });
+    if (error) {
+      setLoading(false);
+      toast({ title: "Sign in failed", description: error.message, variant: "destructive" });
+      return;
+    }
+  };
+
   return (
     <PageTransition>
       <div className="min-h-screen bg-background">
