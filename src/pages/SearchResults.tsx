@@ -237,6 +237,12 @@ const SearchResults = () => {
         <div className="border-b border-border bg-card">
           <div className="container mx-auto px-4 py-8">
             
+            <button
+              onClick={() => (window.history.length > 1 ? navigate(-1) : navigate("/"))}
+              className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <ArrowLeft className="h-4 w-4" /> Back
+            </button>
             <h1 className="mb-4 font-display text-2xl font-bold text-foreground md:text-3xl">Search</h1>
             <form onSubmit={handleSearch} className="flex max-w-2xl gap-2">
               <div className="relative flex-1">
