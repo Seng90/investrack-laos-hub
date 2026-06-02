@@ -1,6 +1,4 @@
 import { useState, useMemo } from "react";
-import { useSearchParams, Link } from "react-router-dom";
-import { useState, useMemo } from "react";
 import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import { Search, MapPin, SlidersHorizontal, X, Briefcase, ArrowLeft } from "lucide-react";
 
