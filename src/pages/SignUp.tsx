@@ -62,6 +62,17 @@ const SignUp = () => {
     navigate("/", { replace: true });
   };
 
+  const handleOAuth = async (provider: "google" | "apple") => {
+    setLoading(true);
+    const { error } = await lovable.auth.signInWithOAuth(provider, {
+      redirect_uri: `${window.location.origin}/`,
+    });
+    if (error) {
+      setLoading(false);
+      toast({ title: "Sign up failed", description: error.message, variant: "destructive" });
+    }
+  };
+
   return (
     <PageTransition>
       <div className="min-h-screen bg-background">
