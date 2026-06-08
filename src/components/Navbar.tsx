@@ -46,6 +46,9 @@ const Navbar = () => {
           <Link to="/compare" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
             Compare
           </Link>
+          <Link to="/fundraising-posts" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+            Raises
+          </Link>
           <Link to="/dashboard" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
             Dashboard
           </Link>
@@ -115,6 +118,7 @@ const Navbar = () => {
             <Link to="/investors" className="text-sm font-medium text-muted-foreground">Investors</Link>
             
             <Link to="/compare" className="text-sm font-medium text-muted-foreground">Compare</Link>
+            <Link to="/fundraising-posts" className="text-sm font-medium text-muted-foreground">Raises</Link>
             <Link to="/dashboard" className="text-sm font-medium text-muted-foreground">Dashboard</Link>
             <Link to="/pricing" className="text-sm font-medium text-accent">Pricing · Pro</Link>
             {user ? (
