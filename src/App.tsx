@@ -19,6 +19,9 @@ import Compare from "./pages/Compare";
 
 import Dashboard from "./pages/Dashboard";
 import Pricing from "./pages/Pricing";
+import FundraisingPosts from "./pages/FundraisingPosts";
+import FundraisingPostDetail from "./pages/FundraisingPostDetail";
+import FundraisingPostForm from "./pages/FundraisingPostForm";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +42,10 @@ function AnimatedRoutes() {
         
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route path="/fundraising-posts" element={<FundraisingPosts />} />
+        <Route path="/fundraising-posts/new" element={<FundraisingPostForm />} />
+        <Route path="/fundraising-posts/:slug" element={<FundraisingPostDetail />} />
+        <Route path="/fundraising-posts/:slug/edit" element={<FundraisingPostForm />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="*" element={<NotFound />} />
