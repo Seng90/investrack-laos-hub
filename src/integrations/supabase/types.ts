@@ -14,6 +14,78 @@ export type Database = {
   }
   public: {
     Tables: {
+      fundraising_posts: {
+        Row: {
+          author_id: string
+          company_name: string
+          company_slug: string | null
+          contact_email: string | null
+          content: string
+          cover_url: string | null
+          created_at: string
+          deadline: string | null
+          excerpt: string | null
+          id: string
+          min_ticket_usd: number | null
+          pitch_deck_url: string | null
+          published_at: string | null
+          round_type: string
+          slug: string
+          status: string
+          tags: string[]
+          target_amount_usd: number | null
+          title: string
+          updated_at: string
+          website_url: string | null
+        }
+        Insert: {
+          author_id: string
+          company_name: string
+          company_slug?: string | null
+          contact_email?: string | null
+          content: string
+          cover_url?: string | null
+          created_at?: string
+          deadline?: string | null
+          excerpt?: string | null
+          id?: string
+          min_ticket_usd?: number | null
+          pitch_deck_url?: string | null
+          published_at?: string | null
+          round_type: string
+          slug: string
+          status?: string
+          tags?: string[]
+          target_amount_usd?: number | null
+          title: string
+          updated_at?: string
+          website_url?: string | null
+        }
+        Update: {
+          author_id?: string
+          company_name?: string
+          company_slug?: string | null
+          contact_email?: string | null
+          content?: string
+          cover_url?: string | null
+          created_at?: string
+          deadline?: string | null
+          excerpt?: string | null
+          id?: string
+          min_ticket_usd?: number | null
+          pitch_deck_url?: string | null
+          published_at?: string | null
+          round_type?: string
+          slug?: string
+          status?: string
+          tags?: string[]
+          target_amount_usd?: number | null
+          title?: string
+          updated_at?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -38,15 +110,42 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "founder" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -173,6 +272,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "founder", "user"],
+    },
   },
 } as const

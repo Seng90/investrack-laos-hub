@@ -1,44 +1,62 @@
+# Fundraising Posts Feature
 
-## Plan: Featured Companies Section + Company Logo Images
+A new section where verified founders can publish blog-style posts announcing their next funding round, and visitors can browse them.
 
-### 1. Add logo field to company data
-Update `src/data/companies.ts`:
-- Add a `logo` field to the `Company` interface (string URL)
-- Populate each company with a professional placeholder logo using `https://ui-avatars.com/api/` (generates letter-based avatars with custom colors and rounded shapes) or `https://logo.clearbit.com/` style URLs
-- This gives each company a unique, professional-looking circular logo image
+## User flows
 
-### 2. Create Featured Companies section on Companies page
-Add a new "Featured Companies" highlight section between the hero header and the search/filter bar in `src/pages/Companies.tsx`:
-- Select the top 3 companies (BCEL, Lao Telecom, Kolao Group -- highest funding) as "featured"
-- Display them in larger, more prominent showcase cards in a horizontal row
-- Each featured card includes:
-  - Company logo image (round, larger size ~16x16)
-  - Company name, sector badge, and stage tag
-  - Full description (not truncated)
-  - Key metrics: Funding, Employees, Founded, Location
-  - Latest news headline
-  - Prominent "View Profile" CTA button
-- Cards use a gradient background, subtle border glow, and framer-motion stagger animations
-- Section header: "Featured Companies" with a star/trophy icon
+- Visitor: visits `/fundraising-posts` → sees list of posts → clicks one → reads detail.
+- Founder (signed in with `founder` role): same list, plus a "New post" button → fills form → publishes → can edit/delete own posts.
+- Non-founder signed-in user: sees list/detail only; "Become a founder" hint on the new-post page.
 
-### 3. Replace letter avatars with logo images everywhere
-Update both the `CompanyCard` component and the `FeaturedCompanies.tsx` homepage component:
-- Replace the `div` showing `company.name.charAt(0)` with an `<img>` tag using the new `logo` field
-- Add an `onError` fallback that shows the letter initial if the image fails to load
-- Style logos with rounded corners and a subtle shadow
+## Pages & routes
 
-### 4. Update FeaturedCompanies homepage component
-Update `src/components/FeaturedCompanies.tsx` to also use logo images instead of letter avatars, keeping consistency across the site.
+- `/fundraising-posts` — public list (card grid, filter by sector, search by title/company).
+- `/fundraising-posts/:slug` — public detail (cover, title, company, round badge, amount, deadline, content, tags, contact/pitch deck CTA, author).
+- `/fundraising-posts/new` — protected, founders only. Form to create.
+- `/fundraising-posts/:slug/edit` — protected, only post owner.
 
-### Technical Details
+Add a "Raising next round" card on Company detail linking to the founder's latest post (if any).
 
-**Company logos**: Will use `https://ui-avatars.com/api/?name=BCEL&background=1a365d&color=fff&size=128&bold=true&format=png` style URLs per company -- these generate real images dynamically based on company name with custom brand colors. This avoids needing to upload actual logo files while still looking professional.
+## Data model (Lovable Cloud / Supabase)
 
-**Featured card layout**: Uses a 3-column grid (`lg:grid-cols-3`) with cards that are taller and more detailed than the regular directory cards. On mobile, they stack vertically.
+1. `app_role` enum: `admin`, `founder`, `user`.
+2. `user_roles` table (`user_id`, `role`) + `has_role(uuid, app_role)` security definer function. Used by RLS — no role data on `profiles`.
+3. `fundraising_posts` table:
+   - `id`, `author_id` (auth.users), `slug` (unique), `title`, `content` (markdown/long text), `excerpt`
+   - `company_name`, `company_slug` (optional — link to existing Company)
+   - `round_type` (Pre-Seed / Seed / Series A / Series B+ / Bridge / Other)
+   - `target_amount_usd` (numeric), `min_ticket_usd` (numeric, optional)
+   - `deadline` (date)
+   - `cover_url` (text — points to Storage bucket)
+   - `tags` (text[]) — sector tags
+   - `contact_email`, `pitch_deck_url`, `website_url`
+   - `status` (`draft` | `published`), `published_at`, `created_at`, `updated_at`
 
-**Files to modify**:
-- `src/data/companies.ts` -- add `logo` field to interface and data
-- `src/pages/Companies.tsx` -- add Featured section, update CompanyCard to use logos
-- `src/components/FeaturedCompanies.tsx` -- update to use logo images
+4. RLS policies:
+   - SELECT published posts → `anon`, `authenticated` (anyone can read).
+   - INSERT → `authenticated` AND `has_role(auth.uid(),'founder')` AND `author_id = auth.uid()`.
+   - UPDATE/DELETE → `authenticated` AND `author_id = auth.uid()`.
+   - `user_roles`: SELECT for authenticated (own rows); admin-only writes (manual seeding for now).
 
-**No new dependencies needed** -- uses existing framer-motion, lucide-react, and standard img tags.
+5. Storage bucket `fundraising-covers` (public read) with RLS allowing founders to upload to a folder named after their `auth.uid()`.
+
+## Implementation steps
+
+1. Migration: create enum, `user_roles`, `has_role` function, `fundraising_posts` table with GRANTs + RLS + `set_updated_at` trigger.
+2. Create storage bucket + RLS policies for covers.
+3. Frontend:
+   - `src/pages/FundraisingPosts.tsx` (list + filter)
+   - `src/pages/FundraisingPostDetail.tsx`
+   - `src/pages/FundraisingPostForm.tsx` (new + edit)
+   - `src/components/fundraising/PostCard.tsx`, `CoverUpload.tsx`
+   - Zod validation for form (title ≤120, content ≤10k, amount ≥0, deadline future, etc.)
+   - Hook `useFounderRole()` checking `user_roles`.
+4. Routing in `src/App.tsx` + a "Fundraising Posts" link in Navbar (between Investors and Compare).
+5. Add "Raising next round" highlight block on `CompanyDetail` querying latest published post matching company slug.
+6. Optional seed: a way for the current user to self-assign the `founder` role from a Settings link — or admin-only via SQL. Plan: provide a small "Request founder access" toast for now; founder role granted by admin manually (insert via supabase tool).
+
+## Notes for the user
+
+- Roles are stored in a separate `user_roles` table (security best practice). Initially no one has the `founder` role; after the feature ships you can tell me which account email should become a founder and I will grant it.
+- Cover images are stored in Lovable Cloud storage; bucket will be public-read so posts render fast.
+- Posts are public once `status = published`; drafts are visible only to their author.
