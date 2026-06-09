@@ -137,7 +137,7 @@ const FundraisingPostForm = () => {
     if (isEdit && postId) {
       const { data, error } = await supabase
         .from("fundraising_posts")
-        .update(payload)
+        .update(payload as any)
         .eq("id", postId)
         .select("slug")
         .single();
@@ -149,10 +149,11 @@ const FundraisingPostForm = () => {
       const newSlug = uniqueSlug(form.title);
       const { data, error } = await supabase
         .from("fundraising_posts")
-        .insert({ ...payload, slug: newSlug })
+        .insert({ ...payload, slug: newSlug } as any)
         .select("slug")
         .single();
       setSubmitting(false);
+
       if (error) return toast({ title: "Couldn't create", description: error.message, variant: "destructive" });
       toast({ title: status === "published" ? "Post published" : "Draft saved" });
       navigate(`/fundraising-posts/${data.slug}`);
