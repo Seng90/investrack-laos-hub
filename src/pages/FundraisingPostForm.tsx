@@ -271,21 +271,37 @@ const FundraisingPostForm = () => {
               <Input value={form.cover_url} onChange={set("cover_url")} placeholder="https://..." />
             </div>
 
-            <div>
-              <Label>Tags (comma separated)</Label>
-              <Input value={form.tags} onChange={set("tags")} placeholder="fintech, mobile, b2b" />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <Label>Country</Label>
+                <select
+                  value={form.country}
+                  onChange={set("country")}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
+                >
+                  {COUNTRIES.map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <Label>Tags (comma separated)</Label>
+                <Input value={form.tags} onChange={set("tags")} placeholder="Fintech, Mobile, B2B" />
+              </div>
             </div>
 
             <div>
               <Label>Content *</Label>
-              <Textarea
+              <p className="mb-1 text-xs text-muted-foreground">
+                Use the toolbar for headings, lists, links, and emphasis.
+              </p>
+              <RichTextEditor
                 value={form.content}
-                onChange={set("content")}
-                rows={12}
-                maxLength={10000}
+                onChange={(html) => setForm((f) => ({ ...f, content: html }))}
                 placeholder="Tell investors about your traction, the problem you solve, your team, and what this round will unlock."
               />
             </div>
+
 
             <div className="grid gap-4 sm:grid-cols-3">
               <div>
@@ -302,14 +318,18 @@ const FundraisingPostForm = () => {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-3 pt-4">
+            <div className="flex flex-wrap items-center gap-3 pt-4">
               <Button onClick={() => submit("published")} disabled={submitting}>
                 {submitting ? "Saving..." : "Publish"}
               </Button>
               <Button variant="outline" onClick={() => submit("draft")} disabled={submitting}>
-                Save draft
+                Save as draft
               </Button>
+              <p className="text-xs text-muted-foreground">
+                Drafts are only visible to you and can be published later.
+              </p>
             </div>
+
           </div>
         </div>
       </PageTransition>
