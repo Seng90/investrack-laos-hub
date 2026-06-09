@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import RichTextEditor from "@/components/fundraising/RichTextEditor";
 import { Button } from "@/components/ui/button";
 import RichTextEditor from "@/components/fundraising/RichTextEditor";
 import { supabase } from "@/integrations/supabase/client";
