@@ -7,8 +7,9 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import RichTextEditor from "@/components/fundraising/RichTextEditor";
+
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useFounderRole } from "@/hooks/useFounderRole";
@@ -16,6 +17,8 @@ import { useToast } from "@/hooks/use-toast";
 import { uniqueSlug } from "@/lib/slug";
 
 const ROUND_TYPES = ["Pre-Seed", "Seed", "Series A", "Series B+", "Bridge", "Other"];
+const COUNTRIES = ["Laos", "Thailand", "Vietnam", "Cambodia", "Myanmar", "Singapore", "Other"];
+
 
 const schema = z.object({
   title: z.string().trim().min(4).max(120),
@@ -28,6 +31,7 @@ const schema = z.object({
   deadline: z.string().optional().or(z.literal("")),
   cover_url: z.string().url().max(500).optional().or(z.literal("")),
   tags: z.string().max(200).optional().or(z.literal("")),
+  country: z.string().max(60).optional().or(z.literal("")),
   contact_email: z.string().email().optional().or(z.literal("")),
   pitch_deck_url: z.string().url().optional().or(z.literal("")),
   website_url: z.string().url().optional().or(z.literal("")),
@@ -53,10 +57,12 @@ const FundraisingPostForm = () => {
     deadline: "",
     cover_url: "",
     tags: "",
+    country: "Laos",
     contact_email: "",
     pitch_deck_url: "",
     website_url: "",
   });
+
 
   useEffect(() => {
     if (!isEdit) return;
@@ -79,9 +85,11 @@ const FundraisingPostForm = () => {
           deadline: data.deadline ?? "",
           cover_url: data.cover_url ?? "",
           tags: (data.tags ?? []).join(", "),
+          country: data.country ?? "Laos",
           contact_email: data.contact_email ?? "",
           pitch_deck_url: data.pitch_deck_url ?? "",
           website_url: data.website_url ?? "",
+
         });
       }
     })();
@@ -117,6 +125,8 @@ const FundraisingPostForm = () => {
       deadline: form.deadline || null,
       cover_url: form.cover_url.trim() || null,
       tags,
+      country: form.country.trim() || null,
+
       contact_email: form.contact_email.trim() || null,
       pitch_deck_url: form.pitch_deck_url.trim() || null,
       website_url: form.website_url.trim() || null,
@@ -127,7 +137,7 @@ const FundraisingPostForm = () => {
     if (isEdit && postId) {
       const { data, error } = await supabase
         .from("fundraising_posts")
-        .update(payload)
+        .update(payload as any)
         .eq("id", postId)
         .select("slug")
         .single();
@@ -139,10 +149,11 @@ const FundraisingPostForm = () => {
       const newSlug = uniqueSlug(form.title);
       const { data, error } = await supabase
         .from("fundraising_posts")
-        .insert({ ...payload, slug: newSlug })
+        .insert({ ...payload, slug: newSlug } as any)
         .select("slug")
         .single();
       setSubmitting(false);
+
       if (error) return toast({ title: "Couldn't create", description: error.message, variant: "destructive" });
       toast({ title: status === "published" ? "Post published" : "Draft saved" });
       navigate(`/fundraising-posts/${data.slug}`);
@@ -261,21 +272,37 @@ const FundraisingPostForm = () => {
               <Input value={form.cover_url} onChange={set("cover_url")} placeholder="https://..." />
             </div>
 
-            <div>
-              <Label>Tags (comma separated)</Label>
-              <Input value={form.tags} onChange={set("tags")} placeholder="fintech, mobile, b2b" />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <Label>Country</Label>
+                <select
+                  value={form.country}
+                  onChange={set("country")}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
+                >
+                  {COUNTRIES.map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <Label>Tags (comma separated)</Label>
+                <Input value={form.tags} onChange={set("tags")} placeholder="Fintech, Mobile, B2B" />
+              </div>
             </div>
 
             <div>
               <Label>Content *</Label>
-              <Textarea
+              <p className="mb-1 text-xs text-muted-foreground">
+                Use the toolbar for headings, lists, links, and emphasis.
+              </p>
+              <RichTextEditor
                 value={form.content}
-                onChange={set("content")}
-                rows={12}
-                maxLength={10000}
+                onChange={(html) => setForm((f) => ({ ...f, content: html }))}
                 placeholder="Tell investors about your traction, the problem you solve, your team, and what this round will unlock."
               />
             </div>
+
 
             <div className="grid gap-4 sm:grid-cols-3">
               <div>
@@ -292,14 +319,18 @@ const FundraisingPostForm = () => {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-3 pt-4">
+            <div className="flex flex-wrap items-center gap-3 pt-4">
               <Button onClick={() => submit("published")} disabled={submitting}>
                 {submitting ? "Saving..." : "Publish"}
               </Button>
               <Button variant="outline" onClick={() => submit("draft")} disabled={submitting}>
-                Save draft
+                Save as draft
               </Button>
+              <p className="text-xs text-muted-foreground">
+                Drafts are only visible to you and can be published later.
+              </p>
             </div>
+
           </div>
         </div>
       </PageTransition>

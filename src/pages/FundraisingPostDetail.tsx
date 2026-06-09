@@ -172,9 +172,11 @@ const FundraisingPostDetail = () => {
             )}
           </div>
 
-          <div className="prose prose-neutral mt-10 max-w-none whitespace-pre-wrap text-foreground dark:prose-invert">
-            {post.content}
-          </div>
+          <div
+            className="post-content mt-10 max-w-none text-foreground"
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          />
+
 
           {post.tags.length > 0 && (
             <div className="mt-8 flex flex-wrap gap-2">

@@ -1,0 +1,1 @@
+ALTER TABLE public.fundraising_posts ADD COLUMN IF NOT EXISTS country text;

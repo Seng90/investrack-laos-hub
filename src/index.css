@@ -105,3 +105,59 @@
     font-family: 'Space Grotesk', sans-serif;
   }
 }
+
+/* Quill editor theming */
+.rich-text-editor .ql-toolbar {
+  border: none;
+  border-bottom: 1px solid hsl(var(--border));
+  border-radius: calc(var(--radius) - 2px) calc(var(--radius) - 2px) 0 0;
+  background: hsl(var(--secondary));
+}
+.rich-text-editor .ql-container {
+  border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  min-height: 240px;
+  color: hsl(var(--foreground));
+}
+.rich-text-editor .ql-editor {
+  min-height: 240px;
+}
+.rich-text-editor .ql-editor.ql-blank::before {
+  color: hsl(var(--muted-foreground));
+  font-style: normal;
+}
+.rich-text-editor .ql-stroke { stroke: hsl(var(--foreground)); }
+.rich-text-editor .ql-fill { fill: hsl(var(--foreground)); }
+.rich-text-editor .ql-picker-label { color: hsl(var(--foreground)); }
+
+/* Rendered post content */
+.post-content h1, .post-content h2, .post-content h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+.post-content h2 { font-size: 1.5rem; }
+.post-content h3 { font-size: 1.25rem; }
+.post-content p { margin: 0.75em 0; line-height: 1.7; }
+.post-content ul, .post-content ol { margin: 0.75em 0; padding-left: 1.5em; }
+.post-content ul { list-style: disc; }
+.post-content ol { list-style: decimal; }
+.post-content blockquote {
+  border-left: 3px solid hsl(var(--accent));
+  padding-left: 1em;
+  margin: 1em 0;
+  color: hsl(var(--muted-foreground));
+  font-style: italic;
+}
+.post-content a { color: hsl(var(--accent)); text-decoration: underline; }
+.post-content pre, .post-content code {
+  background: hsl(var(--secondary));
+  border-radius: 4px;
+  padding: 0.15em 0.4em;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+.post-content pre { padding: 0.75em 1em; overflow-x: auto; }
+
