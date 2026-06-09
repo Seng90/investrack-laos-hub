@@ -125,6 +125,8 @@ const FundraisingPostForm = () => {
       deadline: form.deadline || null,
       cover_url: form.cover_url.trim() || null,
       tags,
+      country: form.country.trim() || null,
+
       contact_email: form.contact_email.trim() || null,
       pitch_deck_url: form.pitch_deck_url.trim() || null,
       website_url: form.website_url.trim() || null,
