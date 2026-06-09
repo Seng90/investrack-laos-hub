@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import RichTextEditor from "@/components/fundraising/RichTextEditor";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useFounderRole } from "@/hooks/useFounderRole";
@@ -16,6 +17,8 @@ import { useToast } from "@/hooks/use-toast";
 import { uniqueSlug } from "@/lib/slug";
 
 const ROUND_TYPES = ["Pre-Seed", "Seed", "Series A", "Series B+", "Bridge", "Other"];
+const COUNTRIES = ["Laos", "Thailand", "Vietnam", "Cambodia", "Myanmar", "Singapore", "Other"];
+
 
 const schema = z.object({
   title: z.string().trim().min(4).max(120),
