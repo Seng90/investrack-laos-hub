@@ -31,6 +31,7 @@ const schema = z.object({
   deadline: z.string().optional().or(z.literal("")),
   cover_url: z.string().url().max(500).optional().or(z.literal("")),
   tags: z.string().max(200).optional().or(z.literal("")),
+  country: z.string().max(60).optional().or(z.literal("")),
   contact_email: z.string().email().optional().or(z.literal("")),
   pitch_deck_url: z.string().url().optional().or(z.literal("")),
   website_url: z.string().url().optional().or(z.literal("")),
@@ -56,10 +57,12 @@ const FundraisingPostForm = () => {
     deadline: "",
     cover_url: "",
     tags: "",
+    country: "Laos",
     contact_email: "",
     pitch_deck_url: "",
     website_url: "",
   });
+
 
   useEffect(() => {
     if (!isEdit) return;
@@ -82,9 +85,11 @@ const FundraisingPostForm = () => {
           deadline: data.deadline ?? "",
           cover_url: data.cover_url ?? "",
           tags: (data.tags ?? []).join(", "),
+          country: data.country ?? "Laos",
           contact_email: data.contact_email ?? "",
           pitch_deck_url: data.pitch_deck_url ?? "",
           website_url: data.website_url ?? "",
+
         });
       }
     })();
