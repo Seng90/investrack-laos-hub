@@ -91,7 +91,7 @@ const FundraisingPostForm = () => {
           min_ticket_usd: data.min_ticket_usd?.toString() ?? "",
           deadline: data.deadline ?? "",
           cover_url: data.cover_url ?? "",
-          tags: (data.tags ?? []).join(", "),
+          tags: data.tags ?? [],
           country: data.country ?? "Laos",
           contact_email: data.contact_email ?? "",
           pitch_deck_url: data.pitch_deck_url ?? "",
