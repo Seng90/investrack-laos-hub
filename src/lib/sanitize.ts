@@ -1,6 +1,6 @@
 import DOMPurify from "dompurify";
 
-const CONFIG: DOMPurify.Config = {
+const CONFIG = {
   ALLOWED_TAGS: [
     "p", "br", "strong", "em", "u", "s", "blockquote", "code", "pre",
     "h1", "h2", "h3", "h4", "ul", "ol", "li", "a", "span",
