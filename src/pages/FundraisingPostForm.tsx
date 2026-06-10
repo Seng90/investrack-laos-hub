@@ -37,7 +37,7 @@ const schema = z.object({
   min_ticket_usd: z.coerce.number().min(0).optional().or(z.nan()),
   deadline: z.string().optional().or(z.literal("")),
   cover_url: z.string().url().max(500).optional().or(z.literal("")),
-  tags: z.string().max(200).optional().or(z.literal("")),
+  tags: z.array(z.string().trim().min(1).max(30)).max(10).optional(),
   country: z.string().max(60).optional().or(z.literal("")),
   contact_email: z.string().email().optional().or(z.literal("")),
   pitch_deck_url: z.string().url().optional().or(z.literal("")),
