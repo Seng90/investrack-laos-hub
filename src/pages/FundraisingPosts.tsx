@@ -67,7 +67,7 @@ const FundraisingPosts = () => {
   const filtered = list.filter((p) => {
     if (round !== "all" && p.round_type !== round) return false;
     if (country !== "all" && p.country !== country) return false;
-    if (tag !== "all" && !p.tags.includes(tag)) return false;
+    if (tagFilter.length && !tagFilter.every((t) => p.tags.includes(t))) return false;
     if (q) {
       const s = q.toLowerCase();
       const hay = `${p.title} ${p.company_name} ${p.tags.join(" ")}`.toLowerCase();
@@ -76,12 +76,14 @@ const FundraisingPosts = () => {
     return true;
   });
 
-  const activeFilters = (round !== "all" ? 1 : 0) + (country !== "all" ? 1 : 0) + (tag !== "all" ? 1 : 0);
+  const activeFilters = (round !== "all" ? 1 : 0) + (country !== "all" ? 1 : 0) + tagFilter.length;
   const clearFilters = () => {
     setRound("all");
     setCountry("all");
-    setTag("all");
+    setTagFilter([]);
   };
+  const toggleTag = (t: string) =>
+    setTagFilter((cur) => (cur.includes(t) ? cur.filter((x) => x !== t) : [...cur, t]));
 
   const selectCls =
     "h-10 rounded-md border border-input bg-background px-3 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
