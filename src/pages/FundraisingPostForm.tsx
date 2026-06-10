@@ -116,15 +116,12 @@ const FundraisingPostForm = () => {
       return;
     }
     setSubmitting(true);
-    const tags = form.tags
-      .split(",")
-      .map((t) => t.trim())
-      .filter(Boolean);
+    const tags = form.tags;
     const payload = {
       author_id: user!.id,
       title: form.title.trim(),
       excerpt: form.excerpt.trim() || null,
-      content: form.content.trim(),
+      content: sanitizeHtml(form.content),
       company_name: form.company_name.trim(),
       round_type: form.round_type,
       target_amount_usd: form.target_amount_usd ? Number(form.target_amount_usd) : null,
