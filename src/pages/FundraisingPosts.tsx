@@ -21,7 +21,7 @@ const FundraisingPosts = () => {
   const [q, setQ] = useState("");
   const [round, setRound] = useState<string>("all");
   const [country, setCountry] = useState<string>("all");
-  const [tag, setTag] = useState<string>("all");
+  const [tags, setTags] = useState<string[]>([]);
   const [tab, setTab] = useState<"published" | "drafts">("published");
   const { isFounder } = useFounderRole();
   const { user } = useAuth();
