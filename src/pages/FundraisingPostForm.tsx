@@ -63,7 +63,7 @@ const FundraisingPostForm = () => {
     min_ticket_usd: "",
     deadline: "",
     cover_url: "",
-    tags: "",
+    tags: [] as string[],
     country: "Laos",
     contact_email: "",
     pitch_deck_url: "",
