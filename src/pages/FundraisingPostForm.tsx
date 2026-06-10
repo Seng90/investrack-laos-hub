@@ -9,12 +9,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import RichTextEditor from "@/components/fundraising/RichTextEditor";
+import TagInput from "@/components/fundraising/TagInput";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useFounderRole } from "@/hooks/useFounderRole";
 import { useToast } from "@/hooks/use-toast";
 import { uniqueSlug } from "@/lib/slug";
+import { sanitizeHtml } from "@/lib/sanitize";
+
+const TAG_SUGGESTIONS = [
+  "Fintech", "AgriTech", "EdTech", "HealthTech", "Logistics", "E-commerce",
+  "SaaS", "Mobile", "B2B", "B2C", "Marketplace", "AI", "Climate", "Tourism",
+];
 
 const ROUND_TYPES = ["Pre-Seed", "Seed", "Series A", "Series B+", "Bridge", "Other"];
 const COUNTRIES = ["Laos", "Thailand", "Vietnam", "Cambodia", "Myanmar", "Singapore", "Other"];
