@@ -177,6 +177,30 @@ const FundraisingPosts = () => {
             </div>
           </div>
 
+          {tags.length > 0 && (
+            <div className="mb-6 flex flex-wrap items-center gap-2">
+              <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Tags:
+              </span>
+              {tags.map((t) => {
+                const active = tagFilter.includes(t);
+                return (
+                  <button
+                    key={t}
+                    onClick={() => toggleTag(t)}
+                    className={`rounded-full border px-3 py-1 text-xs font-medium transition ${
+                      active
+                        ? "border-accent bg-accent text-accent-foreground"
+                        : "border-border bg-secondary text-muted-foreground hover:border-accent/40 hover:text-foreground"
+                    }`}
+                  >
+                    #{t}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
           <p className="mb-4 text-sm text-muted-foreground">
             {filtered.length} {filtered.length === 1 ? "post" : "posts"}
           </p>
