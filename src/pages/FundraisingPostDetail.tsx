@@ -7,6 +7,7 @@ import PageTransition from "@/components/PageTransition";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 type Post = {
   id: string;
@@ -174,7 +175,7 @@ const FundraisingPostDetail = () => {
 
           <div
             className="post-content mt-10 max-w-none text-foreground"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
           />
 
 

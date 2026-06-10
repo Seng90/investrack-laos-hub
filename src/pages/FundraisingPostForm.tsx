@@ -9,12 +9,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import RichTextEditor from "@/components/fundraising/RichTextEditor";
+import TagInput from "@/components/fundraising/TagInput";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useFounderRole } from "@/hooks/useFounderRole";
 import { useToast } from "@/hooks/use-toast";
 import { uniqueSlug } from "@/lib/slug";
+import { sanitizeHtml } from "@/lib/sanitize";
+
+const TAG_SUGGESTIONS = [
+  "Fintech", "AgriTech", "EdTech", "HealthTech", "Logistics", "E-commerce",
+  "SaaS", "Mobile", "B2B", "B2C", "Marketplace", "AI", "Climate", "Tourism",
+];
 
 const ROUND_TYPES = ["Pre-Seed", "Seed", "Series A", "Series B+", "Bridge", "Other"];
 const COUNTRIES = ["Laos", "Thailand", "Vietnam", "Cambodia", "Myanmar", "Singapore", "Other"];
@@ -30,7 +37,7 @@ const schema = z.object({
   min_ticket_usd: z.coerce.number().min(0).optional().or(z.nan()),
   deadline: z.string().optional().or(z.literal("")),
   cover_url: z.string().url().max(500).optional().or(z.literal("")),
-  tags: z.string().max(200).optional().or(z.literal("")),
+  tags: z.array(z.string().trim().min(1).max(30)).max(10).optional(),
   country: z.string().max(60).optional().or(z.literal("")),
   contact_email: z.string().email().optional().or(z.literal("")),
   pitch_deck_url: z.string().url().optional().or(z.literal("")),
@@ -56,7 +63,7 @@ const FundraisingPostForm = () => {
     min_ticket_usd: "",
     deadline: "",
     cover_url: "",
-    tags: "",
+    tags: [] as string[],
     country: "Laos",
     contact_email: "",
     pitch_deck_url: "",
@@ -84,7 +91,7 @@ const FundraisingPostForm = () => {
           min_ticket_usd: data.min_ticket_usd?.toString() ?? "",
           deadline: data.deadline ?? "",
           cover_url: data.cover_url ?? "",
-          tags: (data.tags ?? []).join(", "),
+          tags: data.tags ?? [],
           country: data.country ?? "Laos",
           contact_email: data.contact_email ?? "",
           pitch_deck_url: data.pitch_deck_url ?? "",
@@ -109,15 +116,12 @@ const FundraisingPostForm = () => {
       return;
     }
     setSubmitting(true);
-    const tags = form.tags
-      .split(",")
-      .map((t) => t.trim())
-      .filter(Boolean);
+    const tags = form.tags;
     const payload = {
       author_id: user!.id,
       title: form.title.trim(),
       excerpt: form.excerpt.trim() || null,
-      content: form.content.trim(),
+      content: sanitizeHtml(form.content),
       company_name: form.company_name.trim(),
       round_type: form.round_type,
       target_amount_usd: form.target_amount_usd ? Number(form.target_amount_usd) : null,
@@ -286,8 +290,13 @@ const FundraisingPostForm = () => {
                 </select>
               </div>
               <div>
-                <Label>Tags (comma separated)</Label>
-                <Input value={form.tags} onChange={set("tags")} placeholder="Fintech, Mobile, B2B" />
+                <Label>Tags</Label>
+                <TagInput
+                  value={form.tags}
+                  onChange={(tags) => setForm((f) => ({ ...f, tags }))}
+                  suggestions={TAG_SUGGESTIONS}
+                  placeholder="Add a tag (e.g. Fintech)"
+                />
               </div>
             </div>
 

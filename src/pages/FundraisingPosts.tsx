@@ -21,7 +21,7 @@ const FundraisingPosts = () => {
   const [q, setQ] = useState("");
   const [round, setRound] = useState<string>("all");
   const [country, setCountry] = useState<string>("all");
-  const [tag, setTag] = useState<string>("all");
+  const [tagFilter, setTagFilter] = useState<string[]>([]);
   const [tab, setTab] = useState<"published" | "drafts">("published");
   const { isFounder } = useFounderRole();
   const { user } = useAuth();
@@ -67,7 +67,7 @@ const FundraisingPosts = () => {
   const filtered = list.filter((p) => {
     if (round !== "all" && p.round_type !== round) return false;
     if (country !== "all" && p.country !== country) return false;
-    if (tag !== "all" && !p.tags.includes(tag)) return false;
+    if (tagFilter.length && !tagFilter.every((t) => p.tags.includes(t))) return false;
     if (q) {
       const s = q.toLowerCase();
       const hay = `${p.title} ${p.company_name} ${p.tags.join(" ")}`.toLowerCase();
@@ -76,12 +76,14 @@ const FundraisingPosts = () => {
     return true;
   });
 
-  const activeFilters = (round !== "all" ? 1 : 0) + (country !== "all" ? 1 : 0) + (tag !== "all" ? 1 : 0);
+  const activeFilters = (round !== "all" ? 1 : 0) + (country !== "all" ? 1 : 0) + tagFilter.length;
   const clearFilters = () => {
     setRound("all");
     setCountry("all");
-    setTag("all");
+    setTagFilter([]);
   };
+  const toggleTag = (t: string) =>
+    setTagFilter((cur) => (cur.includes(t) ? cur.filter((x) => x !== t) : [...cur, t]));
 
   const selectCls =
     "h-10 rounded-md border border-input bg-background px-3 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
@@ -164,12 +166,6 @@ const FundraisingPosts = () => {
                   <option key={c} value={c}>{c}</option>
                 ))}
               </select>
-              <select value={tag} onChange={(e) => setTag(e.target.value)} className={selectCls}>
-                <option value="all">All industries</option>
-                {tags.map((t) => (
-                  <option key={t} value={t}>{t}</option>
-                ))}
-              </select>
               {activeFilters > 0 && (
                 <button
                   onClick={clearFilters}
@@ -180,6 +176,30 @@ const FundraisingPosts = () => {
               )}
             </div>
           </div>
+
+          {tags.length > 0 && (
+            <div className="mb-6 flex flex-wrap items-center gap-2">
+              <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Tags:
+              </span>
+              {tags.map((t) => {
+                const active = tagFilter.includes(t);
+                return (
+                  <button
+                    key={t}
+                    onClick={() => toggleTag(t)}
+                    className={`rounded-full border px-3 py-1 text-xs font-medium transition ${
+                      active
+                        ? "border-accent bg-accent text-accent-foreground"
+                        : "border-border bg-secondary text-muted-foreground hover:border-accent/40 hover:text-foreground"
+                    }`}
+                  >
+                    #{t}
+                  </button>
+                );
+              })}
+            </div>
+          )}
 
           <p className="mb-4 text-sm text-muted-foreground">
             {filtered.length} {filtered.length === 1 ? "post" : "posts"}
