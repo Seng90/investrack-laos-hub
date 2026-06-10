@@ -72,7 +72,15 @@ const Navbar = () => {
           </button>
           {user ? (
             <>
-              <span className="text-sm text-muted-foreground hidden lg:inline">Hi, {displayName}</span>
+              <Link to="/account" className="text-sm text-muted-foreground hover:text-foreground hidden lg:inline">
+                Hi, {displayName}
+              </Link>
+              <Link
+                to="/account"
+                className="h-9 inline-flex items-center rounded-lg border border-border px-3 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
+              >
+                Account
+              </Link>
               <button
                 onClick={handleSignOut}
                 className="h-9 inline-flex items-center gap-1.5 rounded-lg border border-border px-3 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
@@ -122,9 +130,12 @@ const Navbar = () => {
             <Link to="/dashboard" className="text-sm font-medium text-muted-foreground">Dashboard</Link>
             <Link to="/pricing" className="text-sm font-medium text-accent">Pricing · Pro</Link>
             {user ? (
-              <button onClick={handleSignOut} className="mt-2 h-9 rounded-lg border border-border px-4 text-sm font-medium text-foreground inline-flex items-center justify-center">
-                Sign Out ({displayName})
-              </button>
+              <>
+                <Link to="/account" className="text-sm font-medium text-muted-foreground">Account</Link>
+                <button onClick={handleSignOut} className="mt-2 h-9 rounded-lg border border-border px-4 text-sm font-medium text-foreground inline-flex items-center justify-center">
+                  Sign Out ({displayName})
+                </button>
+              </>
             ) : (
               <>
                 <Link to="/sign-in" className="text-sm font-medium text-muted-foreground">Sign In</Link>

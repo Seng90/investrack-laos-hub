@@ -22,6 +22,8 @@ import Pricing from "./pages/Pricing";
 import FundraisingPosts from "./pages/FundraisingPosts";
 import FundraisingPostDetail from "./pages/FundraisingPostDetail";
 import FundraisingPostForm from "./pages/FundraisingPostForm";
+import TagsManage from "./pages/TagsManage";
+import Account from "./pages/Account";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -46,6 +48,8 @@ function AnimatedRoutes() {
         <Route path="/fundraising-posts/new" element={<FundraisingPostForm />} />
         <Route path="/fundraising-posts/:slug" element={<FundraisingPostDetail />} />
         <Route path="/fundraising-posts/:slug/edit" element={<FundraisingPostForm />} />
+        <Route path="/tags" element={<TagsManage />} />
+        <Route path="/account" element={<Account />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="*" element={<NotFound />} />

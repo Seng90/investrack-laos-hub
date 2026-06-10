@@ -166,12 +166,12 @@ const FundraisingPosts = () => {
                   <option key={c} value={c}>{c}</option>
                 ))}
               </select>
-              {activeFilters > 0 && (
+              {(activeFilters > 0 || q) && (
                 <button
-                  onClick={clearFilters}
-                  className="inline-flex h-10 items-center gap-1 rounded-md border border-border px-3 text-sm text-muted-foreground hover:text-foreground"
+                  onClick={() => { clearFilters(); setQ(""); }}
+                  className="inline-flex h-10 items-center gap-1 rounded-md border border-accent/40 bg-accent/10 px-3 text-sm font-medium text-accent transition hover:bg-accent hover:text-accent-foreground"
                 >
-                  <X className="h-3.5 w-3.5" /> Clear ({activeFilters})
+                  <X className="h-3.5 w-3.5" /> Reset filters ({activeFilters + (q ? 1 : 0)})
                 </button>
               )}
             </div>
@@ -198,6 +198,14 @@ const FundraisingPosts = () => {
                   </button>
                 );
               })}
+              {tagFilter.length > 0 && (
+                <button
+                  onClick={() => setTagFilter([])}
+                  className="inline-flex items-center gap-1 rounded-full border border-border bg-background px-3 py-1 text-xs text-muted-foreground hover:text-foreground"
+                >
+                  <X className="h-3 w-3" /> Clear tags ({tagFilter.length})
+                </button>
+              )}
             </div>
           )}
 

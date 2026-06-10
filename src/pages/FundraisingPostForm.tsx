@@ -18,7 +18,7 @@ import { useToast } from "@/hooks/use-toast";
 import { uniqueSlug } from "@/lib/slug";
 import { sanitizeHtml } from "@/lib/sanitize";
 
-const TAG_SUGGESTIONS = [
+const DEFAULT_TAG_SUGGESTIONS = [
   "Fintech", "AgriTech", "EdTech", "HealthTech", "Logistics", "E-commerce",
   "SaaS", "Mobile", "B2B", "B2C", "Marketplace", "AI", "Climate", "Tourism",
 ];
@@ -53,6 +53,7 @@ const FundraisingPostForm = () => {
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [postId, setPostId] = useState<string | null>(null);
+  const [tagSuggestions, setTagSuggestions] = useState<string[]>(DEFAULT_TAG_SUGGESTIONS);
   const [form, setForm] = useState({
     title: "",
     excerpt: "",
@@ -101,6 +102,19 @@ const FundraisingPostForm = () => {
       }
     })();
   }, [isEdit, slug]);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase
+        .from("tags")
+        .select("name")
+        .eq("active", true)
+        .order("name", { ascending: true });
+      const dbTags = (data ?? []).map((t: any) => t.name as string);
+      const merged = Array.from(new Set([...dbTags, ...DEFAULT_TAG_SUGGESTIONS]));
+      setTagSuggestions(merged);
+    })();
+  }, []);
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
@@ -290,11 +304,16 @@ const FundraisingPostForm = () => {
                 </select>
               </div>
               <div>
-                <Label>Tags</Label>
+                <div className="flex items-center justify-between">
+                  <Label>Tags</Label>
+                  <Link to="/tags" className="text-xs text-accent hover:underline">
+                    Manage tags →
+                  </Link>
+                </div>
                 <TagInput
                   value={form.tags}
                   onChange={(tags) => setForm((f) => ({ ...f, tags }))}
-                  suggestions={TAG_SUGGESTIONS}
+                  suggestions={tagSuggestions}
                   placeholder="Add a tag (e.g. Fintech)"
                 />
               </div>
