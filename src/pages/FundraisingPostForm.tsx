@@ -290,8 +290,13 @@ const FundraisingPostForm = () => {
                 </select>
               </div>
               <div>
-                <Label>Tags (comma separated)</Label>
-                <Input value={form.tags} onChange={set("tags")} placeholder="Fintech, Mobile, B2B" />
+                <Label>Tags</Label>
+                <TagInput
+                  value={form.tags}
+                  onChange={(tags) => setForm((f) => ({ ...f, tags }))}
+                  suggestions={TAG_SUGGESTIONS}
+                  placeholder="Add a tag (e.g. Fintech)"
+                />
               </div>
             </div>
 
