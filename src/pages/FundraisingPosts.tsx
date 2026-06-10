@@ -166,12 +166,6 @@ const FundraisingPosts = () => {
                   <option key={c} value={c}>{c}</option>
                 ))}
               </select>
-              <select value={tag} onChange={(e) => setTag(e.target.value)} className={selectCls}>
-                <option value="all">All industries</option>
-                {tags.map((t) => (
-                  <option key={t} value={t}>{t}</option>
-                ))}
-              </select>
               {activeFilters > 0 && (
                 <button
                   onClick={clearFilters}
